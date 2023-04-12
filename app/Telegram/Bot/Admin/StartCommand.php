@@ -3,6 +3,8 @@
 namespace App\Telegram\Bot\Admin;
 
 use App\Telegram\CommandStepByStep;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
@@ -21,7 +23,7 @@ class StartCommand extends CommandStepByStep
             'سلام',
             'به <b>شاپتلی</b> خوش آمدید.',
             '',
-            emoji('office ') . 'با این بات میتونی <b>فروشگاه</b> خودتو توی تلگرام راه اندازی کنی.',
+            emoji('department_store ') . 'با این بات میتونی <b>فروشگاه</b> خودتو توی تلگرام راه‌اندازی کنی.',
             emoji('moneybag ') . 'پول فروش از محصولاتت هم مستقیم میره تو جیب خودت' . emoji(' moneybag'),
             '',
             emoji('astonished ') . '<i><b>به مدت 2 ماه برای 100 نفر اول اشتراک رایگان میباشد</b></i>' . emoji(' loudspeaker'), // TODO - changeable
@@ -35,7 +37,7 @@ class StartCommand extends CommandStepByStep
             ->inline()
             ->row([
                 Keyboard::inlineButton(['text' => emoji('office ').'فروشگاه های من', 'url' => 'https://google.com']),
-                Keyboard::inlineButton(['text' => emoji('white_check_mark ').'ثبت فروشگاه جدید', 'callback_data' => 'c_one']),
+                Keyboard::inlineButton(['text' => emoji('white_check_mark ').'ثبت فروشگاه جدید', 'callback_data' => 'c_register_shop']),
             ])
             ->row([
                 Keyboard::inlineButton(['text' => emoji('grey_exclamation ') . 'توضیحات بیشتر راجب این بات'.emoji(' grey_exclamation'), 'callback_data' => 'c_about'])
@@ -55,20 +57,16 @@ class StartCommand extends CommandStepByStep
 
     function failStepAction($chat_id, Update $update)
     {
-        Telegram::sendMessage([
-            'chat_id' => $chat_id,
-            'text' => emoji('x ') . "دستور وارد شده اشتباه است",
-        ]);
-    }
-
-    function setShouldCacheNextStep(bool $value): void
-    {
-        $this->shouldCacheNextStep = true;
+//        Telegram::sendMessage([
+//            'chat_id' => $chat_id,
+//            'text' => emoji('x ') . "دستور وارد شده اشتباه است",
+//        ]);
     }
 
     public function actionBeforeMake()
     {
         $this->removeCache();
+        Cache::delete(BOT_CONVERSATION_STATE . $this->update->getChat()->id);
     }
 
 }

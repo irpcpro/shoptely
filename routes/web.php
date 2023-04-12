@@ -1,17 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Telegram\Bot\Api;
 use Telegram\Bot\Helpers\Emojify;
 
 Route::get('/', function () {
-    $telegram = new Api(env('TELEGRAM_BOT_TOKEN'), false, get_telegram_guzzle());
+//    dd(Cache::get('83524826'));
+    $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
 
     dd($telegram->getMe());
 });
 
 Route::get('/set-webhook', function () {
-    $telegram = new Api(env('TELEGRAM_BOT_TOKEN'), false, get_telegram_guzzle());
+    $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
     $setWebhook = $telegram->setWebhook([
         'url' => 'https://7917-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);

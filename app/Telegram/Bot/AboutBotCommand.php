@@ -47,7 +47,6 @@ class AboutBotCommand extends CommandStepByStep
 
         $this->replyWithMessage([
             'text' => $text,
-//            'reply_markup' => $keyboard,
             'parse_mode' => 'HTML'
         ]);
     }
@@ -58,11 +57,6 @@ class AboutBotCommand extends CommandStepByStep
     }
 
     function failStepAction($chat_id, Update $update)
-    {
-        //
-    }
-
-    function setShouldCacheNextStep(bool $value): void
     {
         //
     }

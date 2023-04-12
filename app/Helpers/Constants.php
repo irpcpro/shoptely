@@ -1,2 +1,6 @@
 <?php
 
+const BOT_CONVERSATION_STATE = 'bot_conv_chat_';
+
+const STORE_USERNAME_LETTER_LENGTH = 3;
+const STORE_USERNAME_NUMBER_LENGTH = 3;

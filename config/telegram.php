@@ -1,9 +1,12 @@
 <?php
 
 use App\Telegram\Bot\AboutBotCommand;
-use App\Telegram\Bot\Admin\OneCommand;
+use App\Telegram\Bot\Admin\RegisterShop\RegisterShopCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopNameChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopNameSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
-use App\Telegram\Bot\Admin\TwoCommand;
 
 return [
     /*
@@ -35,7 +38,7 @@ return [
     */
     'bots' => [
         'mybot' => [
-            'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+            'token' => env('TELEGRAM_SHOPTELY_ADMIN_TOKEN', 'YOUR-BOT-TOKEN'),
             'certificate_path' => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
             'webhook_url' => env('TELEGRAM_WEBHOOK_URL', 'YOUR-BOT-WEBHOOK-URL'),
             'commands' => [
@@ -129,10 +132,18 @@ return [
     |
     */
     'commands' => [
-//        HelpCommand::class,
         StartCommand::class,
-
         AboutBotCommand::class,
+
+        // register shop
+        RegisterShopCommand::class,
+
+        ShopNameChangeCommand::class,
+        ShopNameSetCommand::class,
+
+        ShopDescriptionChangeCommand::class,
+        ShopDescriptionSetCommand::class
+
 
     ],
 

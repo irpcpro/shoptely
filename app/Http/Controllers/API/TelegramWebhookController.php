@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Telegram\CommandStepByStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\CallbackQuery;
@@ -24,7 +26,7 @@ class TelegramWebhookController extends Controller
             $body = $request->getContent();
             $body = json_decode($body, true);
 
-            Log::error('d', [$body]);
+//            Log::error('INPUT MESSAGE TELEGRAM=', [$body]);
 
             if(!empty($body['callback_query']) || !empty($body['message'])){
                 if(!empty($body['callback_query'])){
@@ -77,6 +79,10 @@ class TelegramWebhookController extends Controller
         // if it's callback function
         if($tlg->isType('callback_query') && isset($tlg->callbackQuery) && $tlg->callbackQuery instanceof CallbackQuery)
             $this->callBackFunction($tlg->callbackQuery, $tlg);
+
+        if($tlg->objectType() == 'message' && !str_starts_with($tlg->message->text, '/')){
+            $this->callMessageFunction($tlg);
+        }
     }
 
     private function callBackFunction(CallbackQuery $CallBackQuery, Update $tlg)
@@ -87,6 +93,22 @@ class TelegramWebhookController extends Controller
         } catch (\Exception $exception){
             Log::error('ERROR:: error in get query.', [
                 'callBackQuery' => $CallBackQuery,
+                'exception' => $exception,
+            ]);
+            return true;
+        }
+    }
+
+    private function callMessageFunction(Update $tlg)
+    {
+        try {
+            $getCache = Cache::get($tlg->getChat()->id);
+            if(isset($getCache) && !empty($getCache['next_step']) && is_subclass_of($getCache['next_step'][0], CommandStepByStep::class)){
+                Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
+                return true;
+            }
+        } catch (\Exception $exception){
+            Log::error('ERROR:: error in get query.', [
                 'exception' => $exception,
             ]);
             return true;
