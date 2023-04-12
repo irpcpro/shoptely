@@ -8,9 +8,6 @@ use App\Models\Store;
 class StoreController extends Controller
 {
 
-    /**
-     * @throws \Exception
-     */
     public function makeStoreUsername(): string
     {
         do {

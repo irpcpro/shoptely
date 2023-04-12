@@ -36,7 +36,7 @@ class StartCommand extends CommandStepByStep
         $keyboard = Keyboard::make()
             ->inline()
             ->row([
-                Keyboard::inlineButton(['text' => emoji('office ').'فروشگاه های من', 'url' => 'https://google.com']),
+                Keyboard::inlineButton(['text' => emoji('office ').'فروشگاه من', 'callback_data' => 'c_my_store']),
                 Keyboard::inlineButton(['text' => emoji('white_check_mark ').'ثبت فروشگاه جدید', 'callback_data' => 'c_register_shop']),
             ])
             ->row([

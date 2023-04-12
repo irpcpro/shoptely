@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Store extends Model
 {
@@ -23,5 +25,15 @@ class Store extends Model
         'expire_time',
         'token',
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id_user', 'id_user');
+    }
+
+    public function details(): HasMany
+    {
+        return $this->hasMany(StoreDetail::class, 'id_store', 'id_store');
+    }
 
 }

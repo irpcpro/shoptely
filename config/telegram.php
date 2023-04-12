@@ -2,8 +2,13 @@
 
 use App\Telegram\Bot\AboutBotCommand;
 use App\Telegram\Bot\Admin\RegisterShop\RegisterShopCommand;
+use App\Telegram\Bot\Admin\RegisterShop\RegisterShopDoneCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopAddressChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopAddressSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopContact1SetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
@@ -142,8 +147,15 @@ return [
         ShopNameSetCommand::class,
 
         ShopDescriptionChangeCommand::class,
-        ShopDescriptionSetCommand::class
+        ShopDescriptionSetCommand::class,
 
+        ShopContact1ChangeCommand::class,
+        ShopContact1SetCommand::class,
+
+        ShopAddressChangeCommand::class,
+        ShopAddressSetCommand::class,
+
+        RegisterShopDoneCommand::class,
 
     ],
 

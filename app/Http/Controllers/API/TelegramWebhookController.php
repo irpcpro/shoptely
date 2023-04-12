@@ -48,9 +48,18 @@ class TelegramWebhookController extends Controller
                 ]);
                 if($user){
                     // define current user to const
-                    define('CURRENT_USER', Auth::loginUsingId($user->id_user));
-                    $this->executeResponse();
-                    return true;
+                    $login_user = Auth::loginUsingId($user->id_user);
+                    if($login_user !== false){
+                        $this->executeResponse();
+                        return true;
+                    }else{
+                        Log::error("ERROR:: user can't login with his id_user.", [
+                            'user' => $user,
+                            'id_user' => $user->id_user,
+                            'login_user' => $login_user
+                        ]);
+                        return true;
+                    }
                 }else{
                     // throw new \Exception('error in get user details from telegram request 1');
                     Log::error('ERROR:: user not created or not found 4');

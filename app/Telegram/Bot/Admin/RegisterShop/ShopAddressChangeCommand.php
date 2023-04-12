@@ -4,10 +4,10 @@ namespace App\Telegram\Bot\Admin\RegisterShop;
 
 use App\Telegram\CommandStepByStep;
 
-class ShopNameChangeCommand extends CommandStepByStep
+class ShopAddressChangeCommand extends CommandStepByStep
 {
 
-    protected string $name = 'shop_name_change';
+    protected string $name = 'shop_address_change';
 
     public function actionBeforeMake()
     {
@@ -17,7 +17,7 @@ class ShopNameChangeCommand extends CommandStepByStep
     public function handle()
     {
         $this->replyWithMessage([
-            'text' => emoji('department_store ').'نام فروشگاه رو وارد کن :'
+            'text' => emoji('department_store ').'آدرس فروشگاه رو وارد کن :'
         ]);
 
         $this->setShouldCacheNextStep(true);
@@ -26,7 +26,7 @@ class ShopNameChangeCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            ShopNameSetCommand::class
+            ShopAddressSetCommand::class
         ];
     }
 

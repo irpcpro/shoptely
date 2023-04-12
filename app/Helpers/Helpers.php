@@ -18,13 +18,14 @@ function get_telegram_guzzle(): GuzzleHttpClient
     return new GuzzleHttpClient($client);
 }
 
-function emoji($text){
+function emoji($text)
+{
     $space = strpos($text, ' ');
     $text = str_replace(' ', '', $text);
     $emoji = Emojify::text(":$text:");
-    if($space == false)
+    if ($space == false)
         return $emoji;
-    elseif($space == 0)
+    elseif ($space == 0)
         return ' ' . $emoji;
     else
         return $emoji . ' ';
@@ -35,3 +36,20 @@ function join_text(array $text): string
     return join(PHP_EOL, $text);
 }
 
+function convert_text($text): string
+{
+    $char = [
+        '/',
+        '\\',
+        '<',
+        '>',
+        '"',
+        "'"
+    ];
+    return htmlspecialchars(str_replace($char, ' ', $text));
+}
+
+function validate_text_length($text, $char = TEXT_LENGTH_DEFAULT): bool
+{
+    return mb_strlen($text) <= $char;
+}

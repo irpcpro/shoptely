@@ -1,13 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Api;
 use Telegram\Bot\Helpers\Emojify;
 
 Route::get('/', function () {
 //    dd(Cache::get('83524826'));
     $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
+
+
+//    dd($telegram->sendPhoto([
+//        'chat_id' => 83524826,
+//        'photo' => \Telegram\Bot\FileUpload\InputFile::create(Storage::disk('public')->path('logo.png')),
+//        'caption' => 'hello my friend'
+//    ]));
+
 
     dd($telegram->getMe());
 });
@@ -26,6 +36,7 @@ Route::get('/emoji', function(){
 
     // decode the JSON data into a PHP object
     $data = json_decode($jsonData);
+
     $data = collect($data)->chunk(10);
 
     echo '<table>';

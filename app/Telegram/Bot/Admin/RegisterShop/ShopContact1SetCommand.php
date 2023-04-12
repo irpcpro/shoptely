@@ -4,12 +4,14 @@ namespace App\Telegram\Bot\Admin\RegisterShop;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
+use Telegram\Bot\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Objects\Update;
 
-class ShopNameSetCommand extends CommandStepByStep
+class ShopContact1SetCommand extends CommandStepByStep
 {
 
-    protected string $name = 'shop_name_set';
+    protected string $name = 'shop_contact1_set';
 
     public function actionBeforeMake()
     {
@@ -18,10 +20,11 @@ class ShopNameSetCommand extends CommandStepByStep
 
     public function handle()
     {
-        $store_name = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($store_name)){
+        $store_contact1 = convert_text($this->update->getMessage()->text);
+
+        if(validate_text_length($store_contact1)){
             auth()->user()->store()->details()->updateOrCreate([
-                STORE_DET_KEY_NAME => $store_name
+                STORE_DET_KEY_CONTACT1 => $store_contact1
             ]);
 
             $this->replyWithMessage([
@@ -32,10 +35,11 @@ class ShopNameSetCommand extends CommandStepByStep
             if(Cache::get(BOT_CONVERSATION_STATE . $this->update->getChat()->id)){
                 $this->cacheSteps();
 
-                Telegram::triggerCommand('shop_description_change', $this->update);
+                Telegram::triggerCommand('shop_address_change', $this->update);
             }else{
                 Telegram::triggerCommand('my_store', $this->update);
             }
+
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
@@ -49,7 +53,7 @@ class ShopNameSetCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            ShopDescriptionChangeCommand::class
+            ShopAddressChangeCommand::class
         ];
     }
 
