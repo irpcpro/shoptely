@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Objects\CallbackQuery;
+use Telegram\Bot\Objects\Update;
+
+class TelegramWebhookController extends Controller
+{
+
+    /**
+     * @throws \Exception
+     */
+    public function webhook(Request $request)
+    {
+        try {
+            // get body
+            $body = $request->getContent();
+            $body = json_decode($body, true);
+
+            Log::error('d', [$body]);
+
+            if(!empty($body['callback_query']) || !empty($body['message'])){
+                if(!empty($body['callback_query'])){
+                    $telegram_id_user = $body['callback_query']['from']['id'];
+                    $telegram_id_chat = $body['callback_query']['chat']['id'] ?? null;
+                    $telegram_name_user = $body['callback_query']['from']['first_name'] ?? null;
+                }elseif(!empty($body['message'])){
+                    $telegram_id_user = $body['message']['from']['id'];
+                    $telegram_id_chat = $body['message']['chat']['id'] ?? null;
+                    $telegram_name_user = $body['message']['from']['first_name'] ?? null;
+                }
+
+                // check if user exists
+                $user = User::firstOrCreate([
+                    'id_user_telegram' => $telegram_id_user
+                ],[
+                    'name' => $telegram_name_user,
+                    'id_chat_telegram' => $telegram_id_chat,
+                ]);
+                if($user){
+                    // define current user to const
+                    define('CURRENT_USER', Auth::loginUsingId($user->id_user));
+                    $this->executeResponse();
+                    return true;
+                }else{
+                    // throw new \Exception('error in get user details from telegram request 1');
+                    Log::error('ERROR:: user not created or not found 4');
+                    return true;
+                }
+            }else{
+                Log::error('ERROR:: error in get user details from telegram request 3');
+                return true;
+            }
+
+        } catch (\Exception $exception) {
+            Log::error('ERROR:: error in get user details from telegram request 2', [
+                'body' => $request->getContent(),
+                'exception' => $exception,
+            ]);
+            return true;
+            // throw new \Exception('error in get user details from telegram request 2');
+        }
+    }
+
+    private function executeResponse()
+    {
+        // mapping user to his command
+        $tlg = Telegram::commandsHandler(true);
+
+        // if it's callback function
+        if($tlg->isType('callback_query') && isset($tlg->callbackQuery) && $tlg->callbackQuery instanceof CallbackQuery)
+            $this->callBackFunction($tlg->callbackQuery, $tlg);
+    }
+
+    private function callBackFunction(CallbackQuery $CallBackQuery, Update $tlg)
+    {
+        try {
+            $command = explode('c_', $CallBackQuery->data)[1];
+            Telegram::triggerCommand($command, $tlg);
+        } catch (\Exception $exception){
+            Log::error('ERROR:: error in get query.', [
+                'callBackQuery' => $CallBackQuery,
+                'exception' => $exception,
+            ]);
+            return true;
+        }
+    }
+
+}
