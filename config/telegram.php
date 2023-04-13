@@ -6,12 +6,17 @@ use App\Telegram\Bot\Admin\RegisterShop\RegisterShopDoneCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopAddressChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopAddressSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact1SetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopContact2ChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopContact2SetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
+use App\Telegram\Bot\Admin\Store\MyStoreCommand;
+use App\Telegram\Bot\Admin\Store\MyStoreLinkCommand;
+use App\Telegram\Bot\Admin\StoreSettings\SettingStoreCommand;
 
 return [
     /*
@@ -156,6 +161,16 @@ return [
         ShopAddressSetCommand::class,
 
         RegisterShopDoneCommand::class,
+
+        // store
+        MyStoreCommand::class,
+        MyStoreLinkCommand::class,
+
+        // setting store
+        SettingStoreCommand::class,
+
+        ShopContact2ChangeCommand::class,
+        ShopContact2SetCommand::class,
 
     ],
 

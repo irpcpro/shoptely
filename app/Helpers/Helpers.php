@@ -53,3 +53,13 @@ function validate_text_length($text, $char = TEXT_LENGTH_DEFAULT): bool
 {
     return mb_strlen($text) <= $char;
 }
+
+function images($name): string
+{
+    return asset('assets/' . $name);
+}
+
+function link_store(string $store_username): string
+{
+    return TELEGRAM_LINK . env('TELEGRAM_SHOPTELY_ID') . '?' . TELEGRAM_START_STORE_COMMAND . '=' . $store_username;
+}

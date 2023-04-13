@@ -66,7 +66,7 @@ abstract class CommandStepByStep extends Command
          * if it is incorrect step, execute fail step action method of the prevoius command
          * */
 
-        Log::error('check validation : ', [
+        Log::error('check validation in step by step : ', [
             $this::class,
             $previousCommand['command'],
             $previousCommand['next_step'],

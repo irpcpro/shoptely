@@ -26,7 +26,7 @@ class TelegramWebhookController extends Controller
             $body = $request->getContent();
             $body = json_decode($body, true);
 
-//            Log::error('INPUT MESSAGE TELEGRAM=', [$body]);
+            Log::error('++++++++INPUT MESSAGE TELEGRAM++++++++ =', [$body]);
 
             if(!empty($body['callback_query']) || !empty($body['message'])){
                 if(!empty($body['callback_query'])){
@@ -100,7 +100,7 @@ class TelegramWebhookController extends Controller
             $command = explode('c_', $CallBackQuery->data)[1];
             Telegram::triggerCommand($command, $tlg);
         } catch (\Exception $exception){
-            Log::error('ERROR:: error in get query.', [
+            Log::error('ERROR:: error in get query 1.', [
                 'callBackQuery' => $CallBackQuery,
                 'exception' => $exception,
             ]);
@@ -113,11 +113,11 @@ class TelegramWebhookController extends Controller
         try {
             $getCache = Cache::get($tlg->getChat()->id);
             if(isset($getCache) && !empty($getCache['next_step']) && is_subclass_of($getCache['next_step'][0], CommandStepByStep::class)){
-                Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
+                $w = Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
                 return true;
             }
         } catch (\Exception $exception){
-            Log::error('ERROR:: error in get query.', [
+            Log::error('ERROR:: error in get query 2.', [
                 'exception' => $exception,
             ]);
             return true;

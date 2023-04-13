@@ -2,13 +2,9 @@
 
 namespace App\Telegram\Bot\Admin\RegisterShop;
 
-use App\Http\Controllers\API\StoreController;
-use App\Models\Store;
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
-use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Facades\Log;
 
 class RegisterShopDoneCommand extends CommandStepByStep
 {
@@ -16,7 +12,8 @@ class RegisterShopDoneCommand extends CommandStepByStep
 
     public function handle()
     {
-        $text = [
+        Log::error('here 22222255555');
+        $text = join_text([
             'هوراا' . emoji(' tada') .emoji(' innocent'),
             'فروشگاهت ساخته شد.',
             'اطلاعات زیر رو میتونی بعدا از طریق "فروشگاه من /my_store" ویرایش و یا اضافه کنی.',
@@ -28,7 +25,7 @@ class RegisterShopDoneCommand extends CommandStepByStep
             '',
             '/my_store - فروشگاه من',
             '/my_store_link - دریافت آدرس فروشگاه',
-        ];
+        ]);
         $this->replyWithMessage([
             'text' => $text
         ]);
@@ -41,6 +38,7 @@ class RegisterShopDoneCommand extends CommandStepByStep
 
     public function actionBeforeMake()
     {
+        $this->removeCache();
         Cache::delete(BOT_CONVERSATION_STATE . $this->update->getChat()->id);
     }
 }

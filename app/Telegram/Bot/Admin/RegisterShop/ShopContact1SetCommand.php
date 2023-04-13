@@ -23,8 +23,10 @@ class ShopContact1SetCommand extends CommandStepByStep
         $store_contact1 = convert_text($this->update->getMessage()->text);
 
         if(validate_text_length($store_contact1)){
-            auth()->user()->store()->details()->updateOrCreate([
-                STORE_DET_KEY_CONTACT1 => $store_contact1
+            auth()->user()->store()->first()->details()->updateOrCreate([
+                'name' => STORE_DET_KEY_CONTACT1,
+            ],[
+                'value' => $store_contact1
             ]);
 
             $this->replyWithMessage([
@@ -37,7 +39,7 @@ class ShopContact1SetCommand extends CommandStepByStep
 
                 Telegram::triggerCommand('shop_address_change', $this->update);
             }else{
-                Telegram::triggerCommand('my_store', $this->update);
+                Telegram::triggerCommand('setting_store', $this->update);
             }
 
         }else{

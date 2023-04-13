@@ -4,13 +4,14 @@ namespace App\Telegram\Bot\Admin\RegisterShop;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
+use Telegram\Bot\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Objects\Update;
 
-class ShopNameSetCommand extends CommandStepByStep
+class ShopContact2SetCommand extends CommandStepByStep
 {
 
-    protected string $name = 'shop_name_set';
+    protected string $name = 'shop_contact2_set';
 
     public function actionBeforeMake()
     {
@@ -19,26 +20,20 @@ class ShopNameSetCommand extends CommandStepByStep
 
     public function handle()
     {
-        $store_name = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($store_name)){
+        $store_contact2 = convert_text($this->update->getMessage()->text);
+
+        if(validate_text_length($store_contact2)){
             auth()->user()->store()->first()->details()->updateOrCreate([
-                'name' => STORE_DET_KEY_NAME,
+                'name' => STORE_DET_KEY_CONTACT2,
             ],[
-                'value' => $store_name
+                'value' => $store_contact2
             ]);
 
             $this->replyWithMessage([
                 'text' => emoji('white_check_mark ') . 'ذخیره شد',
             ]);
 
-            // if it's on conversation, save the next step and trigger that
-            if(Cache::get(BOT_CONVERSATION_STATE . $this->update->getChat()->id)){
-                $this->cacheSteps();
-
-                Telegram::triggerCommand('shop_description_change', $this->update);
-            }else{
-                Telegram::triggerCommand('setting_store', $this->update);
-            }
+            Telegram::triggerCommand('setting_store', $this->update);
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
@@ -52,7 +47,7 @@ class ShopNameSetCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            ShopDescriptionChangeCommand::class
+            ShopAddressChangeCommand::class
         ];
     }
 

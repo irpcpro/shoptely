@@ -20,8 +20,10 @@ class ShopAddressSetCommand extends CommandStepByStep
     {
         $store_address = convert_text($this->update->getMessage()->text);
         if(validate_text_length($store_address, TEXT_LENGTH_ADDRESS_DEFAULT)){
-            auth()->user()->store()->details()->updateOrCreate([
-                STORE_DET_KEY_ADDRESS => $store_address
+            auth()->user()->store()->first()->details()->updateOrCreate([
+                'name' => STORE_DET_KEY_ADDRESS,
+            ],[
+                'value' => $store_address
             ]);
 
             $this->replyWithMessage([
@@ -32,7 +34,7 @@ class ShopAddressSetCommand extends CommandStepByStep
             if(Cache::get(BOT_CONVERSATION_STATE . $this->update->getChat()->id)){
                 Telegram::triggerCommand('register_shop_done', $this->update);
             }else{
-                Telegram::triggerCommand('my_store', $this->update);
+                Telegram::triggerCommand('setting_store', $this->update);
             }
         }else{
             $this->replyWithMessage([
