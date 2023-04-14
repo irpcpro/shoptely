@@ -4,6 +4,7 @@ namespace App\Telegram\Bot\Admin\RegisterShop;
 
 use App\Http\Controllers\API\StoreController;
 use App\Models\Store;
+use App\Models\User;
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -37,14 +38,7 @@ class RegisterShopCommand extends CommandStepByStep
             ]);
             return true;
         }else{
-            $username = (new StoreController())->makeStoreUsername();
-            $token = $username . '_' . $this->user->id_user . '_' . $this->user->id_user_telegram;
-            Store::create([
-                'id_user' => $this->user->id_user,
-                'username' => $username,
-                'expire_time' => now()->addDay(STORE_EXPIRE_DATE),
-                'token' => Hash::make($token),
-            ]);
+            StoreController::create_store($this->user);
 
             $this->replyWithMessage([
                 'text' => 'خوب، بزن بریم فروشگاهتو بسازی'.emoji(' sunglasses')
@@ -53,20 +47,15 @@ class RegisterShopCommand extends CommandStepByStep
             $this->cacheSteps();
 
             // get name
-            Telegram::triggerCommand('shop_name_change', $this->update);
+            Telegram::triggerCommand('auth_get_mobile', $this->update);
         }
     }
 
     function nextSteps(): array
     {
         return [
-            ShopNameChangeCommand::class
+            AuthGetMobileCommand::class
         ];
-    }
-
-    function failStepAction($chat_id, Update $update)
-    {
-        $this->replyWrongCommand($chat_id);
     }
 
     public function actionBeforeMake()

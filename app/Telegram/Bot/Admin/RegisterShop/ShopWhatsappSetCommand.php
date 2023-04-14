@@ -8,10 +8,10 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
-class ShopContact1SetCommand extends CommandStepByStep
+class ShopWhatsappSetCommand extends CommandStepByStep
 {
 
-    protected string $name = 'shop_contact1_set';
+    protected string $name = 'shop_whatsapp_set';
 
     public $user;
 
@@ -30,31 +30,22 @@ class ShopContact1SetCommand extends CommandStepByStep
     {
         $value = convert_text($this->update->getMessage()->text);
 
-        if(validate_text_length($value) && $value != STORE_DETAILS_REMOVE_KEYWORD){
+        if(validate_text_length($value)){
             $this->user->store()->first()->details()->updateOrCreate([
-                'name' => STORE_DET_KEY_CONTACT1,
+                'name' => STORE_DET_KEY_SOCIAL_WHATSAPP,
             ],[
-                'value' => $value
+                'value' => $value != STORE_DETAILS_REMOVE_KEYWORD ? $value : null
             ]);
 
             $this->replyWithMessage([
                 'text' => emoji('white_check_mark ') . 'ذخیره شد',
             ]);
 
-            // if it's on conversation, save the next step and trigger that
-            if(Cache::get(BOT_CONVERSATION_STATE . $this->update->getChat()->id)){
-                $this->cacheSteps();
-
-                Telegram::triggerCommand('shop_address_change', $this->update);
-            }else{
-                Telegram::triggerCommand('setting_store', $this->update);
-            }
-
+            Telegram::triggerCommand('setting_store', $this->update);
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
                     emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_DEFAULT.' کاراکتر باشد',
-                    emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])
             ]);
@@ -63,9 +54,7 @@ class ShopContact1SetCommand extends CommandStepByStep
 
     function nextSteps(): array
     {
-        return [
-            ShopAddressChangeCommand::class
-        ];
+        return [];
     }
 
 }

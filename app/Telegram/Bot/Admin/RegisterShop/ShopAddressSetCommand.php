@@ -11,6 +11,14 @@ class ShopAddressSetCommand extends CommandStepByStep
 
     protected string $name = 'shop_address_set';
 
+    public $user;
+
+    public function __construct()
+    {
+        $this->setCheckUserActive(true);
+        $this->user = auth()->user();
+    }
+
     public function actionBeforeMake()
     {
         //
@@ -18,12 +26,12 @@ class ShopAddressSetCommand extends CommandStepByStep
 
     public function handle()
     {
-        $store_address = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($store_address, TEXT_LENGTH_ADDRESS_DEFAULT)){
-            auth()->user()->store()->first()->details()->updateOrCreate([
+        $value = convert_text($this->update->getMessage()->text);
+        if(validate_text_length($value, TEXT_LENGTH_ADDRESS_DEFAULT) && $value != STORE_DETAILS_REMOVE_KEYWORD){
+            $this->user->store()->first()->details()->updateOrCreate([
                 'name' => STORE_DET_KEY_ADDRESS,
             ],[
-                'value' => $store_address
+                'value' => $value
             ]);
 
             $this->replyWithMessage([
@@ -40,6 +48,7 @@ class ShopAddressSetCommand extends CommandStepByStep
             $this->replyWithMessage([
                 'text' => join_text([
                     emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_ADDRESS_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])
             ]);

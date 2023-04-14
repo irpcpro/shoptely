@@ -13,6 +13,14 @@ class ShopContact2SetCommand extends CommandStepByStep
 
     protected string $name = 'shop_contact2_set';
 
+    public $user;
+
+    public function __construct()
+    {
+        $this->setCheckUserActive(true);
+        $this->user = auth()->user();
+    }
+
     public function actionBeforeMake()
     {
         //
@@ -20,13 +28,13 @@ class ShopContact2SetCommand extends CommandStepByStep
 
     public function handle()
     {
-        $store_contact2 = convert_text($this->update->getMessage()->text);
+        $value = convert_text($this->update->getMessage()->text);
 
-        if(validate_text_length($store_contact2)){
-            auth()->user()->store()->first()->details()->updateOrCreate([
+        if(validate_text_length($value)){
+            $this->user->store()->first()->details()->updateOrCreate([
                 'name' => STORE_DET_KEY_CONTACT2,
             ],[
-                'value' => $store_contact2
+                'value' => $value != STORE_DETAILS_REMOVE_KEYWORD ? $value : null
             ]);
 
             $this->replyWithMessage([
@@ -46,9 +54,7 @@ class ShopContact2SetCommand extends CommandStepByStep
 
     function nextSteps(): array
     {
-        return [
-            ShopAddressChangeCommand::class
-        ];
+        return [];
     }
 
 }

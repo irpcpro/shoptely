@@ -2,6 +2,17 @@
 
 const BOT_CONVERSATION_STATE = 'bot_conv_chat_';
 
+const REGEX_MOBILE = "/^09[0-9]{9}$/";
+const MOBILE_LENGTH = 11;
+const AUTH_CODE_FAKE = true;
+const AUTH_CODE_LENGTH = 4;
+const AUTH_CODE_EXPIRE_TIME = 90;
+
+const MODELS_CREATED_AT_DEFAULT_FORMAT = 'Y-m-d H:i:s';
+const MODELS_UPDATED_AT_DEFAULT_FORMAT = 'Y-m-d H:i:s';
+const MODELS_CREATED_AT_FORMAT = 'Y-m-d H:i:s';
+const MODELS_UPDATED_AT_FORMAT = 'Y-m-d H:i:s';
+
 const STORE_USERNAME_LETTER_LENGTH = 3;
 const STORE_USERNAME_NUMBER_LENGTH = 3;
 const STORE_EXPIRE_DATE = 60;
@@ -20,6 +31,7 @@ const STORE_DET_KEY_SOCIAL_WHATSAPP = 'whatsapp';
 
 const STORE_DETAILS_NOT_SET = 'وارد نشده';
 const STORE_DETAILS_IS_SET = 'وارد شده';
+const STORE_DETAILS_REMOVE_KEYWORD = 'remove';
 
 const WATERMARK_QR_LOGO_PATH = '/public/assets/logo-qr.png';
 const TELEGRAM_LINK_QR_FORMAT = 'png';

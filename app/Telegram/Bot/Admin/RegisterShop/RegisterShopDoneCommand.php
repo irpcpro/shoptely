@@ -17,6 +17,8 @@ class RegisterShopDoneCommand extends CommandStepByStep
             'هوراا' . emoji(' tada') .emoji(' innocent'),
             'فروشگاهت ساخته شد.',
             'اطلاعات زیر رو میتونی بعدا از طریق "فروشگاه من /my_store" ویرایش و یا اضافه کنی.',
+            emoji('white_small_square ') . 'ثبت و ویرایش محصولات',
+            emoji('white_small_square ') . 'ساخت و ویرایش دسته بندی ها',
             emoji('white_small_square ') . 'شماره تماس 2',
             emoji('white_small_square ') . 'لوگو فروشگاه',
             emoji('white_small_square ') . 'آدرس تلگرام - اینستا - واتساپ',

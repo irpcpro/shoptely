@@ -4,7 +4,6 @@ namespace App\Telegram\Bot\Admin\Store;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class MyStoreCommand extends CommandStepByStep
@@ -34,10 +33,15 @@ class MyStoreCommand extends CommandStepByStep
             return true;
         }
 
+        // check if user is not active
+        if($this->user_is_active() != true)
+            return true;
+
+
         $store = $this->user->store()->first();
 
         $txt = join_text([
-            emoji('department_store ') . '<b>' . ($store->details()->where('name', STORE_DET_KEY_NAME)->first()->value ?? STORE_DETAILS_NOT_SET) . '</b>' . emoji(' white_check_mark'),
+            emoji('department_store ') . 'نام فروشگاه :<b>' . ($store->details()->where('name', STORE_DET_KEY_NAME)->first()->value ?? STORE_DETAILS_NOT_SET) . '</b>' . emoji(' white_check_mark'),
             '',
             emoji('department_store ') . 'از این قسمت میتونی فروشگاه خودتو مدیریت کنی.',
             'محصولات اضافه کنی، دسته بندی هارو مدیریت کنی و یا اطلاعات فروشگاهتو آپدیت کنی',

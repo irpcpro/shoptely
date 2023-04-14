@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_chat_telegram')->unique();
             $table->string('name')->nullable();
             $table->string('mobile')->unique()->nullable();
+            $table->boolean('active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

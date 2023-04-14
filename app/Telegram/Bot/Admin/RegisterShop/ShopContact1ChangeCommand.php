@@ -12,11 +12,16 @@ class ShopContact1ChangeCommand extends CommandStepByStep
 
     protected string $name = 'shop_contact1_change';
 
+    public function __construct()
+    {
+        $this->setCheckUserActive(true);
+    }
+
     public function handle()
     {
         $text = join_text([
             emoji('department_store ').'یک شماره تماس برای فروشگاهت وارد کن که مشتریا باهات تماس بگیرن :'.
-            '(دقت کن که بدون خط تیره و فاصله بنویسی و اگه شماره ثابت وارد میکنی کد شهرت هم قبلش بنویس)'
+            '(دقت کن که بدون خط تیره و فاصله بنویسی و اگه شماره ثابت وارد میکنی کد شهرت هم قبلش بنویس)',
         ]);
         $this->replyWithMessage([
             'text' => $text

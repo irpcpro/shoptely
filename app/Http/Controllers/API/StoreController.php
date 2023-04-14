@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\AuthenticationCodeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,6 +33,11 @@ class StoreController extends Controller
     }
 
     public function makeQRCodeFilename($username, $id_store): string
+    {
+        return $username . '-' . $id_store;
+    }
+
+    public function makeAvatarFilename($username, $id_store): string
     {
         return $username . '-' . $id_store;
     }
@@ -62,6 +70,69 @@ class StoreController extends Controller
             ]);
         }
         return 'ERROR';
+    }
+
+    public static function create_store(User $user)
+    {
+        $username = (new StoreController())->makeStoreUsername();
+        $token = $username . '_' . $user->id_user . '_' . $user->id_user_telegram;
+
+        Store::create([
+            'id_user' => $user->id_user,
+            'username' => $username,
+            'expire_time' => now()->addDay(STORE_EXPIRE_DATE),
+            'token' => Hash::make($token),
+        ]);
+    }
+
+    public static function send_code(User $user): bool
+    {
+        // send code
+        event(new AuthenticationCodeEvent($user));
+
+        // response
+        return true;
+    }
+
+    public static function confirmation_code(User $user, $code): array
+    {
+        // check if user have code
+        $auth_code = $user->authenticationCodes();
+        $auth_code = $auth_code->getUserLastActiveCode();
+
+        // check if user have and code
+        if(!$auth_code->exists())
+            return [
+                'status' => false,
+                'message' => 'کد منقضی شده است'
+            ];
+
+        // get code
+        $auth_code = $auth_code->first();
+
+        // check code
+        if($auth_code->code != $code)
+            return [
+                'status' => false,
+                'message' => 'کد اشتباه است'
+            ];
+
+        // expire code
+        $auth_code->update([
+            'expired' => true
+        ]);
+
+        // update user active status
+        if(!$user->active)
+            $user->update([
+                'active' => true
+            ]);
+
+        // generate token and sent
+        return [
+            'status' => true,
+            'message' => 'شماره شما تایید شد'
+        ];
     }
 
 }

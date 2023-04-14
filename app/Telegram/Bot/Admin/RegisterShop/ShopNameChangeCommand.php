@@ -9,6 +9,11 @@ class ShopNameChangeCommand extends CommandStepByStep
 
     protected string $name = 'shop_name_change';
 
+    public function __construct()
+    {
+        $this->setCheckUserActive(true);
+    }
+
     public function actionBeforeMake()
     {
         //
@@ -16,8 +21,11 @@ class ShopNameChangeCommand extends CommandStepByStep
 
     public function handle()
     {
+        $text = join_text([
+            emoji('department_store ').'نام فروشگاه رو وارد کن :',
+        ]);
         $this->replyWithMessage([
-            'text' => emoji('department_store ').'نام فروشگاه رو وارد کن :'
+            'text' => $text
         ]);
 
         $this->setShouldCacheNextStep(true);

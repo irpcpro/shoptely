@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'id_user_telegram',
         'id_chat_telegram',
         'mobile',
+        'active',
     ];
 
     /**
@@ -51,6 +53,11 @@ class User extends Authenticatable
     public function store(): HasOne
     {
         return $this->hasOne(Store::class, 'id_user', 'id_user');
+    }
+
+    public function authenticationCodes(): HasMany
+    {
+        return $this->hasMany(AuthenticationCode::class, 'id_user', 'id_user');
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Telegram\Bot\Admin\StoreSettings;
 
 use App\Telegram\CommandStepByStep;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SettingStoreCommand extends CommandStepByStep
 {
@@ -14,6 +15,7 @@ class SettingStoreCommand extends CommandStepByStep
 
     public function __construct()
     {
+        $this->setCheckUserActive(true);
         $this->user = auth()->user();
     }
 
@@ -82,15 +84,15 @@ class SettingStoreCommand extends CommandStepByStep
                 Keyboard::inlineButton(['text' => ($contact1 ? $_ok : $_no) . 'تغییر شماره تماس  1', 'callback_data' => 'c_shop_contact1_change']),
             ])
             ->row([
-                Keyboard::inlineButton(['text' => ($logo ? $_ok : $_no) . 'تغییر لوگو', 'callback_data' => 'c_setting_store']),
+                Keyboard::inlineButton(['text' => ($logo ? $_ok : $_no) . 'تغییر لوگو', 'callback_data' => 'c_shop_logo_change']),
                 Keyboard::inlineButton(['text' => ($address ? $_ok : $_no) . 'تغییر آدرس', 'callback_data' => 'c_shop_address_change']),
             ])
             ->row([
-                Keyboard::inlineButton(['text' => ($telegram ? $_ok : $_no) . 'لینک تلگرام', 'callback_data' => 'c_setting_store']),
-                Keyboard::inlineButton(['text' => ($instagram ? $_ok : $_no) . 'لینک اینستاگرام', 'callback_data' => 'c_my_store']),
+                Keyboard::inlineButton(['text' => ($telegram ? $_ok : $_no) . 'لینک تلگرام', 'callback_data' => 'c_shop_telegram_change']),
+                Keyboard::inlineButton(['text' => ($instagram ? $_ok : $_no) . 'لینک اینستاگرام', 'callback_data' => 'c_shop_instagram_change']),
             ])
             ->row([
-                Keyboard::inlineButton(['text' => ($whatsapp ? $_ok : $_no) . 'لینک واتساپ', 'callback_data' => 'c_my_store']),
+                Keyboard::inlineButton(['text' => ($whatsapp ? $_ok : $_no) . 'لینک واتساپ', 'callback_data' => 'c_shop_whatsapp_change']),
             ]);
 
         // send reply

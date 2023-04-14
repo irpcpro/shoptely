@@ -1,6 +1,9 @@
 <?php
 
 use App\Telegram\Bot\AboutBotCommand;
+use App\Telegram\Bot\Admin\RegisterShop\AuthCodeSendCommand;
+use App\Telegram\Bot\Admin\RegisterShop\AuthCodeVerifyCommand;
+use App\Telegram\Bot\Admin\RegisterShop\AuthGetMobileCommand;
 use App\Telegram\Bot\Admin\RegisterShop\RegisterShopCommand;
 use App\Telegram\Bot\Admin\RegisterShop\RegisterShopDoneCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopAddressChangeCommand;
@@ -11,8 +14,16 @@ use App\Telegram\Bot\Admin\RegisterShop\ShopContact2SetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopLogoChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopLogoSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopTelegramChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopTelegramSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopWhatsappChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopWhatsappSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
 use App\Telegram\Bot\Admin\Store\MyStoreCommand;
 use App\Telegram\Bot\Admin\Store\MyStoreLinkCommand;
@@ -145,6 +156,11 @@ return [
         StartCommand::class,
         AboutBotCommand::class,
 
+        // auth mobile
+        AuthGetMobileCommand::class,
+        AuthCodeSendCommand::class,
+        AuthCodeVerifyCommand::class,
+
         // register shop
         RegisterShopCommand::class,
 
@@ -171,6 +187,18 @@ return [
 
         ShopContact2ChangeCommand::class,
         ShopContact2SetCommand::class,
+
+        ShopTelegramChangeCommand::class,
+        ShopTelegramSetCommand::class,
+
+        ShopInstagramChangeCommand::class,
+        ShopInstagramSetCommand::class,
+
+        ShopWhatsappChangeCommand::class,
+        ShopWhatsappSetCommand::class,
+
+        ShopLogoChangeCommand::class,
+        ShopLogoSetCommand::class,
 
     ],
 

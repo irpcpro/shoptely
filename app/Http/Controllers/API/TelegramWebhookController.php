@@ -89,8 +89,12 @@ class TelegramWebhookController extends Controller
         if($tlg->isType('callback_query') && isset($tlg->callbackQuery) && $tlg->callbackQuery instanceof CallbackQuery)
             $this->callBackFunction($tlg->callbackQuery, $tlg);
 
-        if($tlg->objectType() == 'message' && !str_starts_with($tlg->message->text, '/')){
+        if($tlg->objectType() == 'message' && !str_starts_with($tlg->message->text, '/') && !$tlg->getMessage()->has('photo')){
             $this->callMessageFunction($tlg);
+        }
+
+        if($tlg->getMessage()->has('photo')){
+            $this->callImageFunction($tlg);
         }
     }
 
@@ -113,11 +117,48 @@ class TelegramWebhookController extends Controller
         try {
             $getCache = Cache::get($tlg->getChat()->id);
             if(isset($getCache) && !empty($getCache['next_step']) && is_subclass_of($getCache['next_step'][0], CommandStepByStep::class)){
-                $w = Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
+                Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
                 return true;
             }
         } catch (\Exception $exception){
             Log::error('ERROR:: error in get query 2.', [
+                'exception' => $exception,
+            ]);
+            return true;
+        }
+    }
+
+    private function callImageFunction(Update $tlg)
+    {
+        try {
+            $getCache = Cache::get($tlg->getChat()->id);
+            if(isset($getCache) && !empty($getCache['next_step']) && is_subclass_of($getCache['next_step'][0], CommandStepByStep::class)){
+                Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
+                return true;
+            }
+
+//            $getPhotoes = $tlg->getMessage()->getPhoto();
+//            $i = 5;
+//
+//            Log::error('ffffffffffff', [
+//                $getPhotoes,
+//                gettype($getPhotoes),
+//                collect($getPhotoes)->last()
+//            ]);
+
+//            while(!isset($getPhotoes[$i])){
+//                $i--;
+//            }
+//            $photo_id = $getPhotoes[$i]->getFileId();
+//            $file = Telegram::getFile(['file_id' => $photo_id]);
+//
+//            $file_path = $file->getFilePath();
+//
+//            $image_data = file_get_contents('https://api.telegram.org/file/bot' . env('TELEGRAM_SHOPTELY_ADMIN_TOKEN') . '/' . $file_path);
+//            Storage::put('path/to/save/image.jpg', $image_data);
+//
+        } catch (\Exception $exception){
+            Log::error('ERROR:: error in get query 3.', [
                 'exception' => $exception,
             ]);
             return true;

@@ -4,6 +4,11 @@ use GuzzleHttp\Client;
 use Telegram\Bot\Helpers\Emojify;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
+function telegram_get_file_url(): string
+{
+    return 'https://api.telegram.org/file/bot';
+}
+
 function guzzle_client(): Client
 {
     return new Client([
@@ -62,4 +67,9 @@ function images($name): string
 function link_store(string $store_username): string
 {
     return TELEGRAM_LINK . env('TELEGRAM_SHOPTELY_ID') . '?' . TELEGRAM_START_STORE_COMMAND . '=' . $store_username;
+}
+
+function remove_details_hint(): string
+{
+    return '(برای پاک کردن کلمه '.STORE_DETAILS_REMOVE_KEYWORD.' را ارسال کنید)';
 }

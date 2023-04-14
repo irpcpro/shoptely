@@ -6,11 +6,20 @@ use App\Http\Controllers\API\StoreController;
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class MyStoreLinkCommand extends CommandStepByStep
 {
 
     protected string $name = 'my_store_link';
+
+    public $user;
+
+    public function __construct()
+    {
+        $this->setCheckUserActive(true);
+        $this->user = auth()->user();
+    }
 
     public function handle()
     {
@@ -21,9 +30,8 @@ class MyStoreLinkCommand extends CommandStepByStep
             ]
         );
 
-        $user = auth()->user();
-        if($user->store()->exists()){
-            $store = $user->store()->first();
+        if($this->user->store()->exists()){
+            $store = $this->user->store()->first();
             $getFileDir = (new StoreController())->makeStoreQRCodeLink($store);
             $fileStream = Storage::disk('qr')->readStream($getFileDir);
 

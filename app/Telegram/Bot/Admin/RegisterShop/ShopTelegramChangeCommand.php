@@ -7,10 +7,10 @@ use Telegram\Bot\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
-class ShopDescriptionChangeCommand extends CommandStepByStep
+class ShopTelegramChangeCommand extends CommandStepByStep
 {
 
-    protected string $name = 'shop_description_change';
+    protected string $name = 'shop_telegram_change';
 
     public function __construct()
     {
@@ -20,7 +20,8 @@ class ShopDescriptionChangeCommand extends CommandStepByStep
     public function handle()
     {
         $text = join_text([
-            emoji('department_store ').'یک توضیحی درمورد فروشگاهت بده :',
+            emoji('department_store ').'آیدی گروه یا کانال تلگرام خود را وارد کنید :',
+            remove_details_hint()
         ]);
         $this->replyWithMessage([
             'text' => $text
@@ -32,7 +33,7 @@ class ShopDescriptionChangeCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            ShopDescriptionSetCommand::class
+            ShopTelegramSetCommand::class
         ];
     }
 

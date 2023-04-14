@@ -32,6 +32,12 @@ abstract class CommandStepByStep extends Command
      * */
     private $chat_id;
     private bool $hasAccess = true;
+    private bool $check_user_active = false;
+
+    public function setCheckUserActive($value)
+    {
+        $this->check_user_active = $value;
+    }
 
     /**
      * this method will execute before check validation of nextStep.
@@ -107,9 +113,14 @@ abstract class CommandStepByStep extends Command
         // execute action before check nextStep validation
         $this->actionBeforeMake();
 
+        // check if user is active
+        if($this->check_user_active && $this->user_is_active() == false){
+            return true;
+        }
+
         // check nextStep validation
         if ($this->nextStepValidation($update) === false) {
-            return false;
+            return true;
         }
 
         return $this->handle();
@@ -175,6 +186,18 @@ abstract class CommandStepByStep extends Command
      * */
     public function setShouldCacheNextStep(bool $value): void {
         $this->shouldCacheNextStep = $value;
+    }
+
+    public function user_is_active(): bool
+    {
+        if(!auth()->user()->active){
+            $this->replyWithMessage([
+                'text' => emoji('exclamation ') . 'ابتدا نیازه با شماره خودت احراز هویت انجام بدی',
+            ]);
+            Telegram::triggerCommand('auth_get_mobile', $this->update);
+            return false;
+        }
+        return true;
     }
 
 }
