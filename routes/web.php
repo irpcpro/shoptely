@@ -14,6 +14,9 @@ Route::get('/', function () {
 
 
 
+    dd('qweqwewqe');
+
+
     $w = '[{"file_id":"AgACAgQAAxkBAAICmWQ4kkRF7MQneswkvRBr9DNwdqKUAAK6ujEbxVHJUX2jTScdqLaQAQADAgADcwADLwQ","file_unique_id":"AQADuroxG8VRyVF4","file_size":1868,"width":90,"height":90},{"file_id":"AgACAgQAAxkBAAICmWQ4kkRF7MQneswkvRBr9DNwdqKUAAK6ujEbxVHJUX2jTScdqLaQAQADAgADbQADLwQ","file_unique_id":"AQADuroxG8VRyVFy","file_size":16219,"width":320,"height":320},{"file_id":"AgACAgQAAxkBAAICmWQ4kkRF7MQneswkvRBr9DNwdqKUAAK6ujEbxVHJUX2jTScdqLaQAQADAgADeAADLwQ","file_unique_id":"AQADuroxG8VRyVF9","file_size":24223,"width":449,"height":449}]';
     $w = json_decode($w, true);
 
@@ -50,7 +53,7 @@ Route::get('/', function () {
 Route::get('/set-webhook', function () {
     $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
     $setWebhook = $telegram->setWebhook([
-        'url' => 'https://fc43-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
+        'url' => 'https://44f9-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);
     dd($setWebhook);
 });

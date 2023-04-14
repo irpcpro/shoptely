@@ -17,6 +17,8 @@ use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopLogoChangeCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopLogoRemoveCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopLogoSeeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopLogoSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopNameSetCommand;
@@ -199,6 +201,8 @@ return [
 
         ShopLogoChangeCommand::class,
         ShopLogoSetCommand::class,
+        ShopLogoRemoveCommand::class,
+        ShopLogoSeeCommand::class,
 
     ],
 

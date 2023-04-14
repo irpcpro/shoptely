@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Telegram\CommandStepByStep;
+use App\Telegram\GetImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -85,6 +86,8 @@ class TelegramWebhookController extends Controller
         // mapping user to his command
         $tlg = Telegram::commandsHandler(true);
 
+//        return true;
+
         // if it's callback function
         if($tlg->isType('callback_query') && isset($tlg->callbackQuery) && $tlg->callbackQuery instanceof CallbackQuery)
             $this->callBackFunction($tlg->callbackQuery, $tlg);
@@ -116,7 +119,12 @@ class TelegramWebhookController extends Controller
     {
         try {
             $getCache = Cache::get($tlg->getChat()->id);
-            if(isset($getCache) && !empty($getCache['next_step']) && is_subclass_of($getCache['next_step'][0], CommandStepByStep::class)){
+            if(
+                isset($getCache) &&
+                !empty($getCache['next_step']) &&
+                is_subclass_of($getCache['next_step'][0], CommandStepByStep::class) &&
+                !in_array(GetImage::class, class_uses($getCache['next_step'][0]))
+            ){
                 Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
                 return true;
             }
@@ -136,27 +144,6 @@ class TelegramWebhookController extends Controller
                 Telegram::triggerCommand((new $getCache['next_step'][0])->getName(), $tlg);
                 return true;
             }
-
-//            $getPhotoes = $tlg->getMessage()->getPhoto();
-//            $i = 5;
-//
-//            Log::error('ffffffffffff', [
-//                $getPhotoes,
-//                gettype($getPhotoes),
-//                collect($getPhotoes)->last()
-//            ]);
-
-//            while(!isset($getPhotoes[$i])){
-//                $i--;
-//            }
-//            $photo_id = $getPhotoes[$i]->getFileId();
-//            $file = Telegram::getFile(['file_id' => $photo_id]);
-//
-//            $file_path = $file->getFilePath();
-//
-//            $image_data = file_get_contents('https://api.telegram.org/file/bot' . env('TELEGRAM_SHOPTELY_ADMIN_TOKEN') . '/' . $file_path);
-//            Storage::put('path/to/save/image.jpg', $image_data);
-//
         } catch (\Exception $exception){
             Log::error('ERROR:: error in get query 3.', [
                 'exception' => $exception,

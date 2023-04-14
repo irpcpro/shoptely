@@ -7,20 +7,21 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Message;
+use Intervention\Image\Facades\Image;
 
 trait GetImage
 {
 
 
 
-    public function setImageFromTelegram(Message $message, User $user, string $filename, bool $remove_prev = true)
+    public function setImageFromTelegram(Message $message, User $user, string $filename, string $dir)
     {
 
         Log::error('fffffffffffffffffffffff*************', [
             'message' => $message,
+            'message->getPhoto()' => $message->getPhoto(),
             'user' => $user,
             'filename' => $filename,
-            'remove_prev' => $remove_prev
         ]);
 
         try {
@@ -41,12 +42,14 @@ trait GetImage
             if ($response->getStatusCode() == 200) {
                 $fileContents = $response->getBody()->getContents();
 
-                // remove the previous file
-                if($remove_prev && Storage::disk('avatar')->exists($filename))
-                    Storage::disk('avatar')->delete($filename);
-
                 // put file into storage
-                Storage::disk('avatar')->put($filename, $fileContents);
+                $filename_extension = $filename . '.' . TELEGRAM_SHOP_AVATAR_EXTENSION;
+                $image = Image::make($fileContents);
+                $image->fit(TELEGRAM_SHOP_AVATAR_FINAL_WIDTH, TELEGRAM_SHOP_AVATAR_FINAL_HEIGHT);
+                $image->save($dir . $filename_extension);
+                $image->encode(TELEGRAM_SHOP_AVATAR_EXTENSION, TELEGRAM_SHOP_AVATAR_FINAL_QUALITY);
+
+                return true;
             }
         } catch (\Exception $exception) {
             Log::error('ERROR:: in try catch get file image from telegram' . __METHOD__, [
@@ -55,11 +58,9 @@ trait GetImage
         }
 
         Log::error('ERROR:: cant get image file from telegram',[
-            'exception' => $exception,
             'message' => $message,
             'user' => $user,
             'filename' => $filename,
-            'remove_prev' => $remove_prev,
         ]);
         return [
             'status' => false,
