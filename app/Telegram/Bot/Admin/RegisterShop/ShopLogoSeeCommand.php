@@ -33,7 +33,7 @@ class ShopLogoSeeCommand extends CommandStepByStep
             $image_stream = Storage::disk('avatar')->readStream($image_file_name);
             $txt = join_text([
                 'زمان ثبت:',
-                Verta::instance($details->created_at)->format('Y/m/d H:i:s')
+                Verta::instance($details->created_at)->format(FORMAT_DATE_TIME)
             ]);
             $this->replyWithPhoto([
                 'photo' => $image_stream,

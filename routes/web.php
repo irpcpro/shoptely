@@ -4,6 +4,7 @@ use App\Http\Controllers\API\QRMakerController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Telegram\Bot\Api;
 use Telegram\Bot\Helpers\Emojify;
@@ -11,8 +12,7 @@ use Telegram\Bot\Helpers\Emojify;
 Route::get('/', function () {
 
 
-
-
+    dd(preg_match('/^\/store_category_edit_(\d+)$/i', '/store_category_edit_4'));
 
     dd('qweqwewqe');
 
@@ -56,7 +56,7 @@ Route::get('/set-webhook', function () {
         'url' => 'https://44f9-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);
     dd($setWebhook);
-});
+})->name('telegram_webhook');
 
 Route::get('/emoji', function(){
 

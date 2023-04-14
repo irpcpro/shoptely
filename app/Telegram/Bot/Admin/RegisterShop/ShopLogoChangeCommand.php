@@ -22,7 +22,8 @@ class ShopLogoChangeCommand extends CommandStepByStep
         $this->setShouldCacheNextStep(true);
         $txt = join_text([
             emoji('frame_with_picture ') . 'لطفا یک تصویر را ارسال کنید:',
-            '(حداکثر سایز تصویر 1000*1000 میباشد)'
+            emoji('warning ') . 'لطفا تصویر را به صورت فایل ارسال نکنید',
+            '(حداکثر سایز تصویر 1000*1000 میباشد)',
         ]);
         $this->replyWithMessage([
             'text' => $txt

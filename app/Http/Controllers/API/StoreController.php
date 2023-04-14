@@ -6,6 +6,7 @@ use App\Events\AuthenticationCodeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\User;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -80,7 +81,7 @@ class StoreController extends Controller
         Store::create([
             'id_user' => $user->id_user,
             'username' => $username,
-            'expire_time' => now()->addDay(STORE_EXPIRE_DATE),
+            'expire_time' => now()->addDay(STORE_EXPIRE_DATE)->setTime(23,59,59),
             'token' => Hash::make($token),
         ]);
     }
@@ -133,6 +134,16 @@ class StoreController extends Controller
             'status' => true,
             'message' => 'شماره شما تایید شد'
         ];
+    }
+
+    public static function store_expire_date(Store $store): string
+    {
+        return Verta::instance($store->expire_time)->format(FORMAT_DATE);
+    }
+
+    public static function store_expire_day(Store $store): string
+    {
+        return $store->expire_time->diffInDays(now());
     }
 
 }

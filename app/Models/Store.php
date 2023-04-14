@@ -26,6 +26,10 @@ class Store extends Model
         'token',
     ];
 
+    protected $casts = [
+        'expire_time' => 'datetime',
+    ];
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id_user', 'id_user');
@@ -34,6 +38,11 @@ class Store extends Model
     public function details(): HasMany
     {
         return $this->hasMany(StoreDetail::class, 'id_store', 'id_store');
+    }
+
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'id_store', 'id_store');
     }
 
 }

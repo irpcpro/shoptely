@@ -29,6 +29,12 @@ use App\Telegram\Bot\Admin\RegisterShop\ShopWhatsappSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
 use App\Telegram\Bot\Admin\Store\MyStoreCommand;
 use App\Telegram\Bot\Admin\Store\MyStoreLinkCommand;
+use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategoryAddCommand;
+use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategorySetCommand;
+use App\Telegram\Bot\Admin\StoreCategory\Edit\StoreCategoryEditCommand;
+use App\Telegram\Bot\Admin\StoreCategory\List\StoreCategoryListCommand;
+use App\Telegram\Bot\Admin\StoreCategory\StoreCategoryManagementCommand;
+use App\Telegram\Bot\Admin\StoreManagement\StoreManagementCommand;
 use App\Telegram\Bot\Admin\StoreSettings\SettingStoreCommand;
 
 return [
@@ -203,6 +209,16 @@ return [
         ShopLogoSetCommand::class,
         ShopLogoRemoveCommand::class,
         ShopLogoSeeCommand::class,
+
+        // store management
+        StoreManagementCommand::class,
+
+        StoreCategoryManagementCommand::class,
+        StoreCategoryListCommand::class,
+        StoreCategoryAddCommand::class,
+        StoreCategorySetCommand::class,
+        StoreCategoryEditCommand::class,
+
 
     ],
 
