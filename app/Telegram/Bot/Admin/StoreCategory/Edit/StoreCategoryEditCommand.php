@@ -10,20 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class StoreCategoryEditCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_category_edit_';
-
-//    protected string $pattern = '/^store_category_edit_(\d+)$/';
-//    protected string $pattern = '/^\/store_category_edit_(\d+)$/i';
-//    protected string $pattern = '/^\/store_category_edit_(\d+)$/i';
-//    protected string $pattern = '/^\/store_category_edit_(\d+)$/';
-//    protected string $pattern = '{param1}{param2}';
-
-
-    protected ?array $entity = [
-        'offset' => 0,
-        'length' => 21,
-        'type' => 'bot_command',
-    ];
+    protected string $name = 'store_category_edit';
 
     public $user;
 
@@ -38,7 +25,9 @@ class StoreCategoryEditCommand extends CommandStepByStep
 
         $value = convert_text($this->update->getMessage()->text);
 
-        Log::error('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', [$value]);
+        Log::error('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', [
+            explode(' ', $this->update->callbackQuery->data)[1]
+        ]);
 
     }
 

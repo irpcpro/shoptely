@@ -105,6 +105,7 @@ class TelegramWebhookController extends Controller
     {
         try {
             $command = explode('c_', $CallBackQuery->data)[1];
+            $command = explode(' ', $command)[0];
             Telegram::triggerCommand($command, $tlg);
         } catch (\Exception $exception){
             Log::error('ERROR:: error in get query 1.', [

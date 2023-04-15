@@ -71,5 +71,10 @@ function link_store(string $store_username): string
 
 function remove_details_hint(): string
 {
-    return '(برای پاک کردن کلمه '.STORE_DETAILS_REMOVE_KEYWORD.' را ارسال کنید)';
+    return '(برای پاک کردن کلمه ' . STORE_DETAILS_REMOVE_KEYWORD . ' را ارسال کنید)';
+}
+
+function get_num_row_paginate($current_page): int
+{
+    return ($current_page - 1) * PAGINATION_LISTS + 1;
 }

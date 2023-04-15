@@ -1,16 +1,19 @@
 <?php
 
-use App\Http\Controllers\API\QRMakerController;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Telegram\Bot\Api;
 use Telegram\Bot\Helpers\Emojify;
 
 Route::get('/', function () {
 
+
+
+    $store = User::where('id_user', 4)->first()->store()->first();
+    $categories = $store->categories()->paginate(2, ['*'], 'page', 5);
+
+
+    dd($categories->total());
 
     dd(preg_match('/^\/store_category_edit_(\d+)$/i', '/store_category_edit_4'));
 
@@ -53,7 +56,7 @@ Route::get('/', function () {
 Route::get('/set-webhook', function () {
     $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
     $setWebhook = $telegram->setWebhook([
-        'url' => 'https://44f9-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
+        'url' => 'https://d042-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);
     dd($setWebhook);
 })->name('telegram_webhook');
