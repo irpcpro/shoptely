@@ -8,6 +8,19 @@ use Telegram\Bot\Helpers\Emojify;
 Route::get('/', function () {
 
 
+    $add = [
+        'ss' => 'sss'
+    ];
+
+    $s = [
+        'command' => 'a class',
+        'next_step' => ['one', 'two'],
+    ];
+
+    $s = array_merge($s,$add);
+
+    dd($s);
+
 
     $store = User::where('id_user', 4)->first()->store()->first();
     $categories = $store->categories()->paginate(2, ['*'], 'page', 5);
@@ -56,7 +69,7 @@ Route::get('/', function () {
 Route::get('/set-webhook', function () {
     $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
     $setWebhook = $telegram->setWebhook([
-        'url' => 'https://d042-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
+        'url' => 'https://ad52-31-56-166-77.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);
     dd($setWebhook);
 })->name('telegram_webhook');

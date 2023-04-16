@@ -33,6 +33,7 @@ abstract class CommandStepByStep extends Command
     private $chat_id;
     private bool $hasAccess = true;
     private bool $check_user_active = false;
+    private array $extraCacheData = [];
 
     public function setCheckUserActive($value)
     {
@@ -143,8 +144,16 @@ abstract class CommandStepByStep extends Command
             'next_step' => $this->nextSteps()
         ];
 
+        if(!empty($this->extraCacheData))
+            $cacheData = array_merge($cacheData, $this->extraCacheData);
+
         // save cache
         Cache::set($this->chat_id, $cacheData);
+    }
+
+    protected function setExtraCacheData(array $value)
+    {
+        $this->extraCacheData = $value;
     }
 
     /**

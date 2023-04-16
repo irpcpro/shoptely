@@ -45,8 +45,8 @@ class StoreCategoryListCommand extends CommandStepByStep
             foreach ($categories as $category) {
                 $collect_data[] = [
                     'keyboard' => Keyboard::make()->inline()->row([
-                        Keyboard::inlineButton(['text' => emoji('x ') . 'حذف', 'callback_data' => 'c_store_category_remove 11']),
-                        Keyboard::inlineButton(['text' => emoji('pencil2 ') . 'ویرایش نام', 'callback_data' => 'c_store_category_edit 11']),
+                        Keyboard::inlineButton(['text' => emoji('x ') . 'حذف', 'callback_data' => 'c_store_category_remove '. $category->id_category]),
+                        Keyboard::inlineButton(['text' => emoji('pencil2 ') . 'ویرایش نام', 'callback_data' => 'c_store_category_edit '. $category->id_category]),
                     ]),
                     'text' => join_text([
                         emoji('pushpin ') . '<b>' . $i++ . ' - نام: </b>' . $category->name,

@@ -32,6 +32,7 @@ use App\Telegram\Bot\Admin\Store\MyStoreLinkCommand;
 use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategoryAddCommand;
 use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategorySetCommand;
 use App\Telegram\Bot\Admin\StoreCategory\Edit\StoreCategoryEditCommand;
+use App\Telegram\Bot\Admin\StoreCategory\Edit\StoreCategoryUpdateCommand;
 use App\Telegram\Bot\Admin\StoreCategory\List\StoreCategoryListCommand;
 use App\Telegram\Bot\Admin\StoreCategory\StoreCategoryManagementCommand;
 use App\Telegram\Bot\Admin\StoreManagement\StoreManagementCommand;
@@ -218,6 +219,7 @@ return [
         StoreCategoryAddCommand::class,
         StoreCategorySetCommand::class,
         StoreCategoryEditCommand::class,
+        StoreCategoryUpdateCommand::class,
 
 
     ],
