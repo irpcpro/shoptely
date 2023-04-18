@@ -5,6 +5,8 @@ namespace App\Telegram\Bot\Admin\StoreSettings;
 use App\Telegram\CommandStepByStep;
 use Telegram\Bot\Keyboard\Keyboard;
 
+// TODO - check this class
+
 class SettingStoreCommand extends CommandStepByStep
 {
 
