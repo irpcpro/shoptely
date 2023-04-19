@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Edit;
+namespace App\Telegram\Bot\Admin\StoreCategory\Remove;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Log;
 
-class StoreCategoryEditCommand extends CommandStepByStep
+class StoreCategoryRemoveCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_category_edit';
+    protected string $name = 'store_category_remove';
 
     public $user;
 
@@ -32,7 +32,13 @@ class StoreCategoryEditCommand extends CommandStepByStep
                 ]);
                 // return response to user
                 $this->replyWithMessage([
-                    'text' => emoji('pushpin ') . 'نام دسته را وارد کنید:'
+                    'text' => join_text([
+                        emoji('pushpin ') . 'آیا مطمئن به حذف این دسته هستید؟:',
+                        'کلمه <b>'.STORE_CATEGORY_REMOVE_KEYWORD.'</b> را ارسال کنید',
+                        '',
+                        '(محصولات متصل شده به این دسته، بدون دسته بندی خواهند شد)'
+                    ]),
+                    'parse_mode' => 'HTML'
                 ]);
             }else{
                 $this->replyWithMessage([
@@ -63,7 +69,7 @@ class StoreCategoryEditCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreCategoryUpdateCommand::class
+            StoreCategoryRemoveActionCommand::class
         ];
     }
 }

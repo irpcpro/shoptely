@@ -35,6 +35,7 @@ const STORE_DET_KEY_SOCIAL_WHATSAPP = 'whatsapp';
 const STORE_DETAILS_NOT_SET = 'وارد نشده';
 const STORE_DETAILS_IS_SET = 'وارد شده';
 const STORE_DETAILS_REMOVE_KEYWORD = 'remove';
+const STORE_CATEGORY_REMOVE_KEYWORD = 'remove';
 
 const WATERMARK_QR_LOGO_PATH = '/public/assets/logo-qr.png';
 const TELEGRAM_LINK_QR_FORMAT = 'png';
