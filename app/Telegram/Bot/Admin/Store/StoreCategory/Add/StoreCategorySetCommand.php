@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Add;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory\Add;
 
-use App\Http\Controllers\API\StoreController;
-use App\Models\Category;
 use App\Telegram\CommandStepByStep;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use function auth;
+use function convert_text;
+use function emoji;
+use function join_text;
+use function validate_text_length;
 
 class StoreCategorySetCommand extends CommandStepByStep
 {

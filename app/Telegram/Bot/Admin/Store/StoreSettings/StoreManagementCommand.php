@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreManagement;
+namespace App\Telegram\Bot\Admin\Store\StoreSettings;
 
 use App\Telegram\CommandStepByStep;
 use Telegram\Bot\Keyboard\Keyboard;
+use function auth;
+use function emoji;
+use function join_text;
 
 class StoreManagementCommand extends CommandStepByStep
 {

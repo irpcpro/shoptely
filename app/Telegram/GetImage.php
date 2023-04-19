@@ -43,11 +43,11 @@ trait GetImage
                 $fileContents = $response->getBody()->getContents();
 
                 // put file into storage
-                $filename_extension = $filename . '.' . TELEGRAM_SHOP_AVATAR_EXTENSION;
+                $filename_extension = $filename . '.' . TELEGRAM_SHOP_IMAGES_EXTENSION;
                 $image = Image::make($fileContents);
-                $image->fit(TELEGRAM_SHOP_AVATAR_FINAL_WIDTH, TELEGRAM_SHOP_AVATAR_FINAL_HEIGHT);
+                $image->fit(TELEGRAM_SHOP_IMAGES_FINAL_WIDTH, TELEGRAM_SHOP_IMAGES_FINAL_HEIGHT);
                 $image->save($dir . $filename_extension);
-                $image->encode(TELEGRAM_SHOP_AVATAR_EXTENSION, TELEGRAM_SHOP_AVATAR_FINAL_QUALITY);
+                $image->encode(TELEGRAM_SHOP_IMAGES_EXTENSION, TELEGRAM_SHOP_IMAGES_FINAL_QUALITY);
 
                 return true;
             }

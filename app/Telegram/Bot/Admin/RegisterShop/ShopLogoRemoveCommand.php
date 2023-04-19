@@ -31,8 +31,8 @@ class ShopLogoRemoveCommand extends CommandStepByStep
         $filename = (new StoreController())->makeAvatarFilename($store->username, $store->id_store);
 
         // remove the previous file
-        if(Storage::disk('avatar')->exists($filename . '.' . TELEGRAM_SHOP_AVATAR_EXTENSION)){
-            Storage::disk('avatar')->delete($filename . '.' . TELEGRAM_SHOP_AVATAR_EXTENSION);
+        if(Storage::disk('avatar')->exists($filename . '.' . TELEGRAM_SHOP_IMAGES_EXTENSION)){
+            Storage::disk('avatar')->delete($filename . '.' . TELEGRAM_SHOP_IMAGES_EXTENSION);
 
             $this->replyWithMessage([
                 'text' => emoji('white_check_mark ') . 'تصویر شما با موفقیت حذف شد'

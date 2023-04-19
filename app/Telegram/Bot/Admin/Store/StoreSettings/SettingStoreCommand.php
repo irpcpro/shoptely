@@ -1,9 +1,21 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreSettings;
+namespace App\Telegram\Bot\Admin\Store\StoreSettings;
 
 use App\Telegram\CommandStepByStep;
 use Telegram\Bot\Keyboard\Keyboard;
+use function auth;
+use function emoji;
+use function join_text;
+use const STORE_DET_KEY_ADDRESS;
+use const STORE_DET_KEY_CONTACT1;
+use const STORE_DET_KEY_CONTACT2;
+use const STORE_DET_KEY_DESCRIPTION;
+use const STORE_DET_KEY_LOGO;
+use const STORE_DET_KEY_NAME;
+use const STORE_DET_KEY_SOCIAL_INSTAGRAM;
+use const STORE_DET_KEY_SOCIAL_TELEGRAM;
+use const STORE_DET_KEY_SOCIAL_WHATSAPP;
 
 class SettingStoreCommand extends CommandStepByStep
 {

@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Edit;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory\Edit;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Log;
+use function auth;
+use function emoji;
 
 class StoreCategoryEditCommand extends CommandStepByStep
 {

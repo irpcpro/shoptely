@@ -8,12 +8,12 @@ use App\Telegram\Bot\Admin\RegisterShop\RegisterShopCommand;
 use App\Telegram\Bot\Admin\RegisterShop\RegisterShopDoneCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopAddressChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopAddressSetCommand;
+use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact1SetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact2ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopContact2SetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopDescriptionSetCommand;
-use App\Telegram\Bot\Admin\RegisterShop\ShopContact1ChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopInstagramSetCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopLogoChangeCommand;
@@ -28,17 +28,28 @@ use App\Telegram\Bot\Admin\RegisterShop\ShopWhatsappChangeCommand;
 use App\Telegram\Bot\Admin\RegisterShop\ShopWhatsappSetCommand;
 use App\Telegram\Bot\Admin\StartCommand;
 use App\Telegram\Bot\Admin\Store\MyStoreCommand;
-use App\Telegram\Bot\Admin\Store\MyStoreLinkCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategoryAddCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Add\StoreCategorySetCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Edit\StoreCategoryEditCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Edit\StoreCategoryUpdateCommand;
-use App\Telegram\Bot\Admin\StoreCategory\List\StoreCategoryListCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Remove\StoreCategoryRemoveCommand;
-use App\Telegram\Bot\Admin\StoreCategory\Remove\StoreCategoryRemoveActionCommand;
-use App\Telegram\Bot\Admin\StoreCategory\StoreCategoryManagementCommand;
-use App\Telegram\Bot\Admin\StoreManagement\StoreManagementCommand;
-use App\Telegram\Bot\Admin\StoreSettings\SettingStoreCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Add\StoreCategoryAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Add\StoreCategorySetCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Edit\StoreCategoryEditCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Edit\StoreCategoryUpdateCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\List\StoreCategoryListCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveActionCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveCommand;
+use App\Telegram\Bot\Admin\Store\StoreCategory\StoreCategoryManagementCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Description\StoreProductDescriptionAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Description\StoreProductDescriptionSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskNoCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskYesCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\StoreProductAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title\StoreProductTitleAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title\StoreProductTitleSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\StoreProductManagementCommand;
+use App\Telegram\Bot\Admin\Store\StoreSettings\MyStoreLinkCommand;
+use App\Telegram\Bot\Admin\Store\StoreSettings\SettingStoreCommand;
+use App\Telegram\Bot\Admin\Store\StoreSettings\StoreManagementCommand;
 
 return [
     /*
@@ -216,6 +227,7 @@ return [
         // store management
         StoreManagementCommand::class,
 
+        // category management
         StoreCategoryManagementCommand::class,
         StoreCategoryListCommand::class,
         StoreCategoryAddCommand::class,
@@ -225,6 +237,19 @@ return [
         StoreCategoryRemoveCommand::class,
         StoreCategoryRemoveActionCommand::class,
 
+
+        // product management
+        StoreProductManagementCommand::class,
+        StoreProductAddCommand::class,
+        StoreProductTitleAddCommand::class,
+        StoreProductTitleSetCommand::class,
+        StoreProductDescriptionAddCommand::class,
+        StoreProductDescriptionSetCommand::class,
+        StoreProductImageAddCommand::class,
+        StoreProductImageSetCommand::class,
+        StoreProductImageAskCommand::class,
+        StoreProductImageAskYesCommand::class,
+        StoreProductImageAskNoCommand::class,
 
 
     ],

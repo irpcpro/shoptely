@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Add;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory\Add;
 
-use App\Http\Controllers\API\StoreController;
 use App\Telegram\CommandStepByStep;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use function auth;
+use function join_text;
+use const CATEGORY_COUNT_MAX;
 
 class StoreCategoryAddCommand extends CommandStepByStep
 {

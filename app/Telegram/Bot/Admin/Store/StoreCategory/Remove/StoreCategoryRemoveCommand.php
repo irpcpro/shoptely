@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Remove;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory\Remove;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Log;
+use function auth;
+use function join_text;
 
 class StoreCategoryRemoveCommand extends CommandStepByStep
 {

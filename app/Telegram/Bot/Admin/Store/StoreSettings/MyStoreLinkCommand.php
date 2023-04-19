@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store;
+namespace App\Telegram\Bot\Admin\Store\StoreSettings;
 
 use App\Http\Controllers\API\StoreController;
 use App\Telegram\CommandStepByStep;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use function auth;
+use function join_text;
 
 class MyStoreLinkCommand extends CommandStepByStep
 {

@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory\Remove;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory\Remove;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use function auth;
+use function emoji;
+use function join_text;
+use const STORE_CATEGORY_REMOVE_KEYWORD;
 
 class StoreCategoryRemoveActionCommand extends CommandStepByStep
 {

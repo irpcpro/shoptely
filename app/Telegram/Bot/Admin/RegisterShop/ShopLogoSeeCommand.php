@@ -29,7 +29,7 @@ class ShopLogoSeeCommand extends CommandStepByStep
         if($details->exists()){
             $details = $details->first();
             $image_name = $details->value;
-            $image_file_name = $image_name . '.' . TELEGRAM_SHOP_AVATAR_EXTENSION;
+            $image_file_name = $image_name . '.' . TELEGRAM_SHOP_IMAGES_EXTENSION;
             $image_stream = Storage::disk('avatar')->readStream($image_file_name);
             $txt = join_text([
                 'زمان ثبت:',

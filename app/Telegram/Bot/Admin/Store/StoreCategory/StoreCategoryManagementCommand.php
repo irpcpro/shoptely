@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\StoreCategory;
+namespace App\Telegram\Bot\Admin\Store\StoreCategory;
 
-use App\Http\Controllers\API\StoreController;
 use App\Telegram\CommandStepByStep;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Keyboard\Keyboard;
+use function auth;
+use function emoji;
+use function join_text;
 
 class StoreCategoryManagementCommand extends CommandStepByStep
 {
@@ -27,9 +27,9 @@ class StoreCategoryManagementCommand extends CommandStepByStep
         $categories_count = $store->categories()->count();
 
         $txt = join_text([
-            emoji('department_store ') . 'نام فروشگاه :<b>' . ($store->details()->where('name', STORE_DET_KEY_NAME)->first()->value ?? STORE_DETAILS_NOT_SET) . '</b>',
+            emoji('pushpin ') . 'مدیریت دسته بندی ها',
             '',
-            emoji('pushpin ') . 'مدیریت دسته بندی ها'
+            emoji('department_store ') . 'نام فروشگاه :<b>' . ($store->details()->where('name', STORE_DET_KEY_NAME)->first()->value ?? STORE_DETAILS_NOT_SET) . '</b>',
         ]);
 
         // get details of store
