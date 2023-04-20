@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Description;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
@@ -9,10 +9,10 @@ use function auth;
 use function emoji;
 use function join_text;
 
-class StoreProductImageAddCommand extends CommandStepByStep
+class StoreProductDescriptionAddCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_product_image_add';
+    protected string $name = 'store_product_description_add';
 
     public $user;
 
@@ -31,13 +31,12 @@ class StoreProductImageAddCommand extends CommandStepByStep
             if($product->exists()){
                 $product = $product->first();
 
-                $txt = join_text([
-                    emoji('frame_with_picture ') . 'لطفا یک تصویر را ارسال کنید:',
-                    emoji('warning ') . 'لطفا تصویر را به صورت فایل ارسال نکنید',
-                    '(حداکثر سایز تصویر 1000*1000 میباشد)',
+                $text = join_text([
+                    emoji('pencil2 ') . 'توضیحات محصول رو وارد کن:',
+                    'حداکثر '.LENGTH_DEFAULT_PRODUCT_DESCRIPTION.' کاراکتر'
                 ]);
                 $this->replyWithMessage([
-                    'text' => $txt
+                    'text' => $text
                 ]);
 
                 // set extra data for caching
@@ -51,7 +50,7 @@ class StoreProductImageAddCommand extends CommandStepByStep
                 $this->replyWithMessage([
                     'text' => 'محصولی با این شناسه یافت نشد',
                 ]);
-                Log::error('ERROR:: user tries to get id_product which is not for himself image 1',[
+                Log::error('ERROR:: user tries to get id_product which is not for himself 1',[
                     'chat_id' => $this->update->getMessage()->chat->id,
                     'id_product' => $get_cache['id_product'],
                 ]);
@@ -63,7 +62,7 @@ class StoreProductImageAddCommand extends CommandStepByStep
                     'دوباره تلاش کنید',
                 ])
             ]);
-            Log::error('ERROR:: user tries to get id_product which is not for himself image 2',[
+            Log::error('ERROR:: user tries to get id_product which is not for himself 2',[
                 'chat_id' => $this->update->getMessage()->chat->id,
                 'id_product' => $get_cache['id_product'],
             ]);
@@ -79,7 +78,7 @@ class StoreProductImageAddCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreProductImageSetCommand::class
+            StoreProductDescriptionSetCommand::class
         ];
     }
 }

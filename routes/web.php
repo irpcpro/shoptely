@@ -69,7 +69,7 @@ Route::get('/', function () {
 Route::get('/set-webhook', function () {
     $telegram = new Api(env('TELEGRAM_SHOPTELY_ADMIN_TOKEN'), false, get_telegram_guzzle());
     $setWebhook = $telegram->setWebhook([
-        'url' => 'https://039d-31-56-152-180.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
+        'url' => 'https://ef3e-31-56-152-180.ngrok-free.app'.'/api/webhook/'.env('TELEGRAM_WEBHOOK_TOKEN')
     ]);
     dd($setWebhook);
 })->name('telegram_webhook');

@@ -3,6 +3,7 @@
 namespace App\Telegram\Bot\Admin\Store\StoreProduct;
 
 use App\Telegram\CommandStepByStep;
+use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class StoreProductManagementCommand extends CommandStepByStep
@@ -47,6 +48,7 @@ class StoreProductManagementCommand extends CommandStepByStep
 
     public function actionBeforeMake()
     {
+        Cache::delete(BOT_CONVERSATION_PRODUCT_STATE . $this->update->getChat()->id);
         $this->removeCache();
     }
 

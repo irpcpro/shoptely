@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image;
 
 use App\Http\Controllers\API\ProductController;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskCommand;
 use App\Telegram\CommandStepByStep;
 use App\Telegram\GetImage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use function auth;
+use function convert_text;
+use function emoji;
 
 class StoreProductImageSetCommand extends CommandStepByStep
 {
@@ -27,7 +32,6 @@ class StoreProductImageSetCommand extends CommandStepByStep
     public function handle()
     {
         $get_cache = Cache::get($this->update->getChat()->id);
-        $value = convert_text($this->update->getMessage()->text);
 
         $product = $this->user->store()->first()->products()->where('id_product', $get_cache['id_product']);
         if($product->exists()){
@@ -48,16 +52,17 @@ class StoreProductImageSetCommand extends CommandStepByStep
                 'image' => $filename
             ]);
 
+            // set extra data for caching
+            $this->setExtraCacheData([
+                'id_product' => $product->id_product
+            ]);
+
             $this->replyWithMessage([
                 'text' => emoji('white_check_mark ') . 'تصویر شما با موفقیت ثبت شد'
             ]);
 
-
-
-//            $this->cacheSteps();
-
-            //Telegram::triggerCommand('store_category_management', $this->update);
-
+            $this->cacheSteps();
+            Telegram::triggerCommand('store_product_item_add_ask', $this->update);
         }else{
             $this->replyWithMessage([
                 'text' => 'محصولی با این شناسه یافت نشد',
@@ -77,6 +82,8 @@ class StoreProductImageSetCommand extends CommandStepByStep
 
     function nextSteps(): array
     {
-        return [];
+        return [
+            StoreProductItemAddAskCommand::class
+        ];
     }
 }

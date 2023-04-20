@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add;
 
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleAddCommand;
 use App\Telegram\CommandStepByStep;
+use Illuminate\Support\Facades\Cache;
+use Telegram\Bot\Laravel\Facades\Telegram;
 use function auth;
-use function emoji;
 use function join_text;
+use const BOT_CONVERSATION_PRODUCT_STATE;
 use const PRODUCT_COUNT_MAX;
 
-class StoreProductTitleAddCommand extends CommandStepByStep
+class StoreProductAddCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_product_title_add';
+    protected string $name = 'store_product_add';
 
     public $user;
 
@@ -36,24 +39,27 @@ class StoreProductTitleAddCommand extends CommandStepByStep
         }
 
         $text = join_text([
-            emoji('pencil2 ') . 'عنوان محصول رو وارد کن:'
+            'خوب، بزن بریم' . emoji('  sunglasses')
         ]);
         $this->replyWithMessage([
             'text' => $text
         ]);
 
         $this->setShouldCacheNextStep(true);
+        Telegram::triggerCommand('store_product_title_add', $this->update);
     }
 
     public function actionBeforeMake()
     {
-        //
+        $this->removeCache();
+        Cache::set(BOT_CONVERSATION_PRODUCT_STATE . $this->update->getChat()->id, true);
     }
 
     function nextSteps(): array
     {
         return [
-            StoreProductTitleSetCommand::class
+            StoreProductTitleAddCommand::class
         ];
     }
+
 }

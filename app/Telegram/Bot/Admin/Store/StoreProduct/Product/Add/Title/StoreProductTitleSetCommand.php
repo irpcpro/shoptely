@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title;
 
 use App\Telegram\CommandStepByStep;
-use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use function auth;
 use function convert_text;
@@ -54,7 +53,7 @@ class StoreProductTitleSetCommand extends CommandStepByStep
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_CATEGORY_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_PRODUCT_TITLE.' کاراکتر باشد',
                     emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])

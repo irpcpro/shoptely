@@ -79,6 +79,7 @@ class MyStoreCommand extends CommandStepByStep
     {
         $this->removeCache();
         Cache::delete(BOT_CONVERSATION_STATE . $this->update->getChat()->id);
+        Cache::delete(BOT_CONVERSATION_PRODUCT_STATE . $this->update->getChat()->id);
     }
 
     function nextSteps(): array

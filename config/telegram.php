@@ -36,16 +36,28 @@ use App\Telegram\Bot\Admin\Store\StoreCategory\List\StoreCategoryListCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveActionCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\StoreCategoryManagementCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Description\StoreProductDescriptionAddCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Description\StoreProductDescriptionSetCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAddCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskNoCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskYesCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageSetCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\StoreProductAddCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title\StoreProductTitleAddCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Title\StoreProductTitleSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Description\StoreProductDescriptionAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Description\StoreProductDescriptionSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageAskCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageAskNoCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageAskYesCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\StoreProductAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveActionCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Price\StoreProductItemPriceAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Price\StoreProductItemPriceSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Quantity\StoreProductItemQuantityAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Quantity\StoreProductItemQuantitySetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskNoCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskYesCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Title\StoreProductItemTitleAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Title\StoreProductItemTitleSetCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\StoreProductManagementCommand;
 use App\Telegram\Bot\Admin\Store\StoreSettings\MyStoreLinkCommand;
 use App\Telegram\Bot\Admin\Store\StoreSettings\SettingStoreCommand;
@@ -250,6 +262,20 @@ return [
         StoreProductImageAskCommand::class,
         StoreProductImageAskYesCommand::class,
         StoreProductImageAskNoCommand::class,
+
+        StoreProductItemAddAskCommand::class,
+        StoreProductItemAddAskYesCommand::class,
+        StoreProductItemAddAskNoCommand::class,
+        StoreProductItemTitleAddCommand::class,
+        StoreProductItemTitleSetCommand::class,
+        StoreProductItemPriceAddCommand::class,
+        StoreProductItemPriceSetCommand::class,
+        StoreProductItemQuantityAddCommand::class,
+        StoreProductItemQuantitySetCommand::class,
+
+        StoreProductListCommand::class,
+        StoreProductRemoveCommand::class,
+        StoreProductRemoveActionCommand::class,
 
 
     ],

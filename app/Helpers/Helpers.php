@@ -36,9 +36,9 @@ function emoji($text)
         return $emoji . ' ';
 }
 
-function join_text(array $text): string
+function join_text(array $text, $by = PHP_EOL): string
 {
-    return join(PHP_EOL, $text);
+    return join($by, $text);
 }
 
 function convert_text($text): string
@@ -74,7 +74,19 @@ function remove_details_hint(): string
     return '(برای پاک کردن کلمه ' . STORE_DETAILS_REMOVE_KEYWORD . ' را ارسال کنید)';
 }
 
-function get_num_row_paginate($current_page): int
+function get_num_row_paginate($current_page, $page_num): int
 {
-    return ($current_page - 1) * PAGINATION_LISTS + 1;
+    return ($current_page - 1) * $page_num + 1;
+}
+
+function ConvertDigit($str, $language = 'fa', $echo = false)
+{
+    if ($language == 'fa')
+        $new_string = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'], $str);
+    else
+        $new_string = str_replace(['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'], ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], $str);
+    if ($echo)
+        echo $new_string;
+    else
+        return $new_string;
 }

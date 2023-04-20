@@ -5,11 +5,6 @@ namespace App\Telegram\Bot\Admin\Store\StoreCategory\List;
 use App\Telegram\CommandStepByStep;
 use Hekmatinasser\Verta\Verta;
 use Telegram\Bot\Keyboard\Keyboard;
-use function auth;
-use function emoji;
-use function get_num_row_paginate;
-use function join_text;
-use const PAGINATION_LISTS;
 
 class StoreCategoryListCommand extends CommandStepByStep
 {
@@ -28,7 +23,7 @@ class StoreCategoryListCommand extends CommandStepByStep
     {
         $value_data = explode(' ', $this->update->callbackQuery->data)[1] ?? 1;
         $store = $this->user->store()->first();
-        $categories = $store->categories()->paginate(PAGINATION_LISTS, ['*'], 'page', $value_data);
+        $categories = $store->categories()->paginate(PAGINATION_LISTS_CATEGORY, ['*'], 'page', $value_data);
 
         $txt = [
             emoji('page_facing_up ') . 'لیست دسته بندی ها (' . $categories->count() . ')',
@@ -40,7 +35,7 @@ class StoreCategoryListCommand extends CommandStepByStep
             $last_page = $categories->lastPage();
             $current_page = $categories->currentPage();
             $total = $categories->total();
-            $i = get_num_row_paginate($current_page);
+            $i = get_num_row_paginate($current_page, PAGINATION_LISTS_CATEGORY);
 
             // collect data
             foreach ($categories as $category) {
@@ -56,6 +51,7 @@ class StoreCategoryListCommand extends CommandStepByStep
                     ]),
                 ];
             }
+
             // send each item separately
             foreach ($collect_data as $item) {
                 // send reply

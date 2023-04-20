@@ -3,6 +3,7 @@
 const BOT_CONVERSATION_STATE = 'bot_conv_chat_';
 const BOT_CONVERSATION_PRODUCT_STATE = 'bot_conv_chat_product_';
 
+
 const FORMAT_DATE_TIME = 'Y/m/d - H:i:s';
 const FORMAT_DATE = 'Y/m/d';
 const REGEX_MOBILE = "/^09[0-9]{9}$/";
@@ -26,6 +27,9 @@ const TEXT_LENGTH_CATEGORY_DEFAULT = 30;
 const LENGTH_DEFAULT_PRODUCT_TITLE = 30;
 const LENGTH_DEFAULT_PRODUCT_DESCRIPTION = 1000;
 
+const LENGTH_DEFAULT_PRODUCT_ITEM_TITLE = 30;
+
+
 const STORE_DET_KEY_NAME = 'name';
 const STORE_DET_KEY_DESCRIPTION = 'description';
 const STORE_DET_KEY_CONTACT1 = 'contact1';
@@ -40,6 +44,7 @@ const STORE_DETAILS_NOT_SET = 'وارد نشده';
 const STORE_DETAILS_IS_SET = 'وارد شده';
 const STORE_DETAILS_REMOVE_KEYWORD = 'remove';
 const STORE_CATEGORY_REMOVE_KEYWORD = 'remove';
+const STORE_PRODUCT_REMOVE_KEYWORD = 'remove';
 
 const WATERMARK_QR_LOGO_PATH = '/public/assets/logo-qr.png';
 const TELEGRAM_LINK_QR_FORMAT = 'png';
@@ -53,6 +58,8 @@ const TELEGRAM_SHOP_IMAGES_FINAL_HEIGHT = 450;
 const TELEGRAM_SHOP_IMAGES_FINAL_QUALITY = 80;
 
 const CATEGORY_COUNT_MAX = 15;
-const PAGINATION_LISTS = 2; // TODO - change this on production
+const PAGINATION_LISTS_CATEGORY = 2; // TODO - change this on production
+const PAGINATION_LISTS_PRODUCT = 2; // TODO - change this on production
 
 const PRODUCT_COUNT_MAX = 100;
+const PRODUCT_ITEM_COUNT_MAX = 2;

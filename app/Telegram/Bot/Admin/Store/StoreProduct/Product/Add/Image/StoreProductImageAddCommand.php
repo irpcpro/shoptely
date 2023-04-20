@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Add\Description;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image;
 
-use App\Telegram\Bot\Admin\Store\StoreProduct\Add\Image\StoreProductImageAskCommand;
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use function auth;
+use function emoji;
+use function join_text;
 
-class StoreProductDescriptionSetCommand extends CommandStepByStep
+class StoreProductImageAddCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_product_description_set';
+    protected string $name = 'store_product_image_add';
 
     public $user;
 
@@ -23,19 +24,20 @@ class StoreProductDescriptionSetCommand extends CommandStepByStep
 
     public function handle()
     {
+        // get id_product
         $get_cache = Cache::get($this->update->getChat()->id);
-        $value = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($value, LENGTH_DEFAULT_PRODUCT_DESCRIPTION) && !empty($get_cache) && $get_cache['id_product']){
+        if(!empty($get_cache) && $get_cache['id_product']){
             $product = $this->user->store()->first()->products()->where('id_product', $get_cache['id_product']);
             if($product->exists()){
                 $product = $product->first();
 
-                $product->update([
-                    'description' => $value
+                $txt = join_text([
+                    emoji('frame_with_picture ') . 'لطفا یک تصویر را ارسال کنید:',
+                    emoji('warning ') . 'لطفا تصویر را به صورت فایل ارسال نکنید',
+                    '(حداکثر سایز تصویر 1000*1000 میباشد)',
                 ]);
-
                 $this->replyWithMessage([
-                    'text' => emoji('white_check_mark ') . 'افزوده شد',
+                    'text' => $txt
                 ]);
 
                 // set extra data for caching
@@ -43,27 +45,29 @@ class StoreProductDescriptionSetCommand extends CommandStepByStep
                     'id_product' => $product->id_product
                 ]);
 
-                $this->cacheSteps();
+                $this->setShouldCacheNextStep(true);
 
-                Telegram::triggerCommand('store_product_image_ask', $this->update);
             }else{
                 $this->replyWithMessage([
                     'text' => 'محصولی با این شناسه یافت نشد',
                 ]);
-                Log::error('ERROR:: user tries to get id_product which is not for himself 3',[
+                Log::error('ERROR:: user tries to get id_product which is not for himself image 1',[
                     'chat_id' => $this->update->getMessage()->chat->id,
                     'id_product' => $get_cache['id_product'],
                 ]);
             }
-
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_PRODUCT_DESCRIPTION.' کاراکتر باشد',
-                    emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
-                    'دوباره تلاش کنید :'
+                    emoji('exclamation ') . 'خطایی رخ داده است.',
+                    'دوباره تلاش کنید',
                 ])
             ]);
+            Log::error('ERROR:: user tries to get id_product which is not for himself image 2',[
+                'chat_id' => $this->update->getMessage()->chat->id,
+                'id_product' => $get_cache['id_product'],
+            ]);
+            return true;
         }
     }
 
@@ -75,7 +79,7 @@ class StoreProductDescriptionSetCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreProductImageAskCommand::class,
+            StoreProductImageSetCommand::class
         ];
     }
 }
