@@ -53,7 +53,7 @@ class ShopDescriptionSetCommand extends CommandStepByStep
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_TEXT.' کاراکتر باشد',
                     emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])

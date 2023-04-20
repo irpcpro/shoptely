@@ -30,7 +30,7 @@ class StoreCategoryUpdateCommand extends CommandStepByStep
         $get_cache = Cache::get($this->update->getChat()->id);
 
         $value = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($value, TEXT_LENGTH_CATEGORY_DEFAULT) && !empty($get_cache) && $get_cache['id_category']){
+        if(validate_text_length($value, LENGTH_DEFAULT_CATEGORY_NAME) && !empty($get_cache) && $get_cache['id_category']){
             $store = $this->user->store()->first()->categories()->where('id_category', $get_cache['id_category']);
             if($store->exists()){
                 $store->first()->update([
@@ -55,7 +55,7 @@ class StoreCategoryUpdateCommand extends CommandStepByStep
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_CATEGORY_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_CATEGORY_NAME.' کاراکتر باشد',
                     emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])

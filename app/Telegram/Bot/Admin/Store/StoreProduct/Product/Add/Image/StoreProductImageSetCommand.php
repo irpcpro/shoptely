@@ -3,16 +3,13 @@
 namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image;
 
 use App\Http\Controllers\API\ProductController;
-use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Category\StoreProductCategoryAddCommand;
 use App\Telegram\CommandStepByStep;
 use App\Telegram\GetImage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use function auth;
-use function convert_text;
-use function emoji;
 
 class StoreProductImageSetCommand extends CommandStepByStep
 {
@@ -62,7 +59,7 @@ class StoreProductImageSetCommand extends CommandStepByStep
             ]);
 
             $this->cacheSteps();
-            Telegram::triggerCommand('store_product_item_add_ask', $this->update);
+            Telegram::triggerCommand('store_product_category_add', $this->update);
         }else{
             $this->replyWithMessage([
                 'text' => 'محصولی با این شناسه یافت نشد',
@@ -83,7 +80,7 @@ class StoreProductImageSetCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreProductItemAddAskCommand::class
+            StoreProductCategoryAddCommand::class
         ];
     }
 }

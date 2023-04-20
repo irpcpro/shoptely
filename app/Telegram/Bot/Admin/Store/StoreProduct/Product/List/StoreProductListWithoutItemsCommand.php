@@ -5,11 +5,12 @@ namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\List;
 
 use App\Telegram\CommandStepByStep;
 use Hekmatinasser\Verta\Verta;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 
-class StoreProductListCommand extends CommandStepByStep
+class StoreProductListWithoutItemsCommand extends CommandStepByStep
 {
-    protected string $name = 'store_product_list';
+    protected string $name = 'store_product_list_without_items';
 
     public $user;
 
@@ -46,21 +47,6 @@ class StoreProductListCommand extends CommandStepByStep
                     $cat = PRODUCT_WITHOUT_CATEGORY_TITLE;
                 }
 
-                $makeItems = [];
-                $items = $product->items()->get();
-                if($items->count()){
-                    foreach ($items as $item) {
-                        $quantity = $item->quantity == null ? 'نامحدود' : $item->quantity . 'عدد';
-                        $makeItems[] = join_text([
-                            emoji('white_small_square ') . '<b>'.$item->title.'</b>',
-                            '<b>قیمت:</b> ' . $item->price .' تومان',
-                            '<b>موجودی:</b> ' . $quantity,
-                            '<b>موجود میباشد:</b> ' . ($item->in_stock ? 'بله' : 'خیر'),
-                            ''
-                        ]);
-                    }
-                }
-
                 $collect_data[] = [
                     'keyboard' => Keyboard::make()->inline()->row([
                         Keyboard::inlineButton(['text' => emoji('x ') . 'حذف', 'callback_data' => 'c_store_product_remove '. $product->id_product]),
@@ -70,8 +56,7 @@ class StoreProductListCommand extends CommandStepByStep
                     'text' => join_text([
                         emoji('pushpin ') . '<b>' . $i++ . ' - نام: </b>' . $product->title,
                         'دسته بندی: ' . $cat,
-                        'آیتم ها: ' . $items->count() . 'مورد',
-                        join_text($makeItems),
+                        'آیتم ها: ' . $product->items()->count() . 'مورد',
                         '<b>ساخته شده در: </b> ' . Verta::instance($product->created_at)->format(FORMAT_DATE_TIME),
                     ]),
                 ];
@@ -93,7 +78,7 @@ class StoreProductListCommand extends CommandStepByStep
                 $keyboards = Keyboard::make()->inline();
                 $collect_keyboards = [];
                 for ($i = 1; $i <= $last_page; $i++) {
-                    $collect_keyboards[] = Keyboard::inlineButton(['text' => ($current_page == $i ? emoji('heavy_check_mark ') : '') . "$i", 'callback_data' => "c_store_product_list $i"]);
+                    $collect_keyboards[] = Keyboard::inlineButton(['text' => ($current_page == $i ? emoji('heavy_check_mark ') : '') . "$i", 'callback_data' => "c_store_product_list_without_items $i"]);
                     if($i > 1 && 5 % $i == 0){
                         $keyboards->row($collect_keyboards);
                         $collect_keyboards = [];

@@ -8,6 +8,17 @@ use Telegram\Bot\Helpers\Emojify;
 Route::get('/', function () {
 
 
+    $categories = User::where('id_user', '1')->first()->store()->first()->categories()->get();
+
+
+
+    foreach ($categories->chunk(2) as $item){
+        foreach ($item as $cat){
+            dd($cat);
+        }
+    }
+
+
     $add = [
         'ss' => 'sss'
     ];

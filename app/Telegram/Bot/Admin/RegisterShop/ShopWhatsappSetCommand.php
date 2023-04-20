@@ -45,7 +45,7 @@ class ShopWhatsappSetCommand extends CommandStepByStep
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_TEXT.' کاراکتر باشد',
                     'دوباره تلاش کنید :'
                 ])
             ]);

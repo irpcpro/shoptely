@@ -15,6 +15,7 @@ class Product extends Model
 
     protected $fillable = [
         'id_store',
+        'id_category',
         'title',
         'description',
         'image',
@@ -28,6 +29,11 @@ class Product extends Model
     public function items(): HasMany
     {
         return $this->hasMany(ProductItem::class, 'id_product', 'id_product');
+    }
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(Category::class, 'id_category', 'id_category');
     }
 
 }

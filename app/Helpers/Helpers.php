@@ -54,7 +54,7 @@ function convert_text($text): string
     return htmlspecialchars(str_replace($char, ' ', $text));
 }
 
-function validate_text_length($text, $char = TEXT_LENGTH_DEFAULT): bool
+function validate_text_length($text, $char = LENGTH_DEFAULT_TEXT): bool
 {
     return mb_strlen($text) <= $char;
 }

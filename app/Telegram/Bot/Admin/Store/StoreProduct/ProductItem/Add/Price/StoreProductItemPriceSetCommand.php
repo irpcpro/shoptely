@@ -57,7 +57,7 @@ class StoreProductItemPriceSetCommand extends CommandStepByStep
         if(!validate_text_length($value) || $value == 0){
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_TEXT.' کاراکتر باشد',
                     emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی یا 0 باشد',
                     'دوباره تلاش کنید :'
                 ])

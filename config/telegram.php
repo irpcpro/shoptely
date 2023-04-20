@@ -36,6 +36,8 @@ use App\Telegram\Bot\Admin\Store\StoreCategory\List\StoreCategoryListCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveActionCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\Remove\StoreCategoryRemoveCommand;
 use App\Telegram\Bot\Admin\Store\StoreCategory\StoreCategoryManagementCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Category\StoreProductCategoryAddCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Category\StoreProductCategorySetCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Description\StoreProductDescriptionAddCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Description\StoreProductDescriptionSetCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImageAddCommand;
@@ -47,6 +49,7 @@ use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\StoreProductAddCommand
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleAddCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleSetCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListWithoutItemsCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveActionCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Price\StoreProductItemPriceAddCommand;
@@ -262,6 +265,8 @@ return [
         StoreProductImageAskCommand::class,
         StoreProductImageAskYesCommand::class,
         StoreProductImageAskNoCommand::class,
+        StoreProductCategoryAddCommand::class,
+        StoreProductCategorySetCommand::class,
 
         StoreProductItemAddAskCommand::class,
         StoreProductItemAddAskYesCommand::class,
@@ -273,10 +278,10 @@ return [
         StoreProductItemQuantityAddCommand::class,
         StoreProductItemQuantitySetCommand::class,
 
+        StoreProductListWithoutItemsCommand::class,
         StoreProductListCommand::class,
         StoreProductRemoveCommand::class,
         StoreProductRemoveActionCommand::class,
-
 
     ],
 

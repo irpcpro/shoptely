@@ -28,7 +28,7 @@ class StoreCategorySetCommand extends CommandStepByStep
         $store = $this->user->store()->first()->categories();
 
         $value = convert_text($this->update->getMessage()->text);
-        if(validate_text_length($value, TEXT_LENGTH_CATEGORY_DEFAULT)){
+        if(validate_text_length($value, LENGTH_DEFAULT_CATEGORY_NAME)){
 
             // category
             $store->create([
@@ -44,7 +44,7 @@ class StoreCategorySetCommand extends CommandStepByStep
         }else{
             $this->replyWithMessage([
                 'text' => join_text([
-                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.TEXT_LENGTH_CATEGORY_DEFAULT.' کاراکتر باشد',
+                    emoji('exclamation ') . 'طول متن نباید بیشتر از '.LENGTH_DEFAULT_CATEGORY_NAME.' کاراکتر باشد',
                     emoji('exclamation ') . 'همچنین این مورد نمیتواند خالی باشد',
                     'دوباره تلاش کنید :'
                 ])

@@ -2,7 +2,7 @@
 
 namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image;
 
-use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\StoreProductItemAddAskCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Category\StoreProductCategoryAddCommand;
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -59,7 +59,7 @@ class StoreProductImageAskNoCommand extends CommandStepByStep
             'id_product' => $product->id_product
         ]);
         $this->cacheSteps();
-        Telegram::triggerCommand('store_product_item_add_ask', $this->update);
+        Telegram::triggerCommand('store_product_category_add', $this->update);
     }
 
     public function actionBeforeMake()
@@ -70,7 +70,7 @@ class StoreProductImageAskNoCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreProductItemAddAskCommand::class
+            StoreProductCategoryAddCommand::class
         ];
     }
 }
