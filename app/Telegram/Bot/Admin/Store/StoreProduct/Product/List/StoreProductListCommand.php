@@ -21,6 +21,7 @@ class StoreProductListCommand extends CommandStepByStep
 
     public function handle()
     {
+        // getPaginationProductFromCommand($this->update->callbackQuery->data);
         $value_data = explode(' ', $this->update->callbackQuery->data)[1] ?? 1;
         $store = $this->user->store()->first();
         $products = $store->products()->paginate(PAGINATION_LISTS_PRODUCT, ['*'], 'page', $value_data);

@@ -90,3 +90,15 @@ function ConvertDigit($str, $language = 'fa', $echo = false)
     else
         return $new_string;
 }
+
+function getPaginationProductFromCommand($val, $explode = ' '): int
+{
+    $data = explode($explode, $val)[1] ?? 1;
+    if(!isset($data)){
+        $data = 1;
+    }else{
+        $data = (int)$data;
+        $data = $data != 0? $data : 1;
+    }
+    return $data;
+}
