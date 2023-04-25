@@ -41,12 +41,12 @@ class StoreProductManagementCommand extends CommandStepByStep
             ->row([
                 Keyboard::inlineButton([
                     'text' => emoji('shopping_bags ') . 'لیست محصولات بدون آیتم ها ('.$products_count.')',
-                    'callback_data' => 'c_store_product_list_without_items'
+                    'callback_data' => 'c_store_product_list'
                 ])
             ])->row([
                 Keyboard::inlineButton([
                     'text' => emoji('shopping_bags ') . 'لیست محصولات با آیتم ها ('.$products_count.')',
-                    'callback_data' => 'c_store_product_list'
+                    'callback_data' => 'c_store_product_list 1 show'
                 ])
             ]);
 

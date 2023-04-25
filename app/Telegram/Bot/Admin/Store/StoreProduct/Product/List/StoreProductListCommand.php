@@ -4,7 +4,9 @@ namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\List;
 
 
 use App\Telegram\CommandStepByStep;
+use Cassandra\RetryPolicy\Logging;
 use Hekmatinasser\Verta\Verta;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class StoreProductListCommand extends CommandStepByStep
@@ -21,8 +23,9 @@ class StoreProductListCommand extends CommandStepByStep
 
     public function handle()
     {
-        // getPaginationProductFromCommand($this->update->callbackQuery->data);
-        $value_data = explode(' ', $this->update->callbackQuery->data)[1] ?? 1;
+        $value_data = getPaginationProductFromCommand($this->update->callbackQuery->data);
+        $without_items = explode(' ', $this->update->callbackQuery->data)[2] ?? null;
+
         $store = $this->user->store()->first();
         $products = $store->products()->paginate(PAGINATION_LISTS_PRODUCT, ['*'], 'page', $value_data);
 
@@ -49,16 +52,18 @@ class StoreProductListCommand extends CommandStepByStep
 
                 $makeItems = [];
                 $items = $product->items()->get();
-                if($items->count()){
-                    foreach ($items as $item) {
-                        $quantity = $item->quantity == null ? 'نامحدود' : $item->quantity . 'عدد';
-                        $makeItems[] = join_text([
-                            emoji('white_small_square ') . '<b>'.$item->title.'</b>',
-                            '<b>قیمت:</b> ' . $item->price .' تومان',
-                            '<b>موجودی:</b> ' . $quantity,
-                            '<b>موجود میباشد:</b> ' . ($item->in_stock ? 'بله' : 'خیر'),
-                            ''
-                        ]);
+                if($without_items !== null){
+                    if($items->count()){
+                        foreach ($items as $item) {
+                            $quantity = $item->quantity == null ? 'نامحدود' : $item->quantity . 'عدد';
+                            $makeItems[] = join_text([
+                                emoji('white_small_square ') . '<b>'.$item->title.'</b>',
+                                '<b>قیمت:</b> ' . $item->price .' تومان',
+                                '<b>موجودی:</b> ' . $quantity,
+                                '<b>موجود میباشد:</b> ' . ($item->in_stock ? 'بله' : 'خیر'),
+                                ''
+                            ]);
+                        }
                     }
                 }
 
@@ -90,11 +95,11 @@ class StoreProductListCommand extends CommandStepByStep
 
             // make pagination
             if ($last_page > 1) {
-
+                $make_list_with_items = $without_items != null? ' ' . $without_items : '';
                 $keyboards = Keyboard::make()->inline();
                 $collect_keyboards = [];
                 for ($i = 1; $i <= $last_page; $i++) {
-                    $collect_keyboards[] = Keyboard::inlineButton(['text' => ($current_page == $i ? emoji('heavy_check_mark ') : '') . "$i", 'callback_data' => "c_store_product_list $i"]);
+                    $collect_keyboards[] = Keyboard::inlineButton(['text' => ($current_page == $i ? emoji('heavy_check_mark ') : '') . "$i", 'callback_data' => "c_store_product_list $i" . $make_list_with_items]);
                     if($i > 1 && 5 % $i == 0){
                         $keyboards->row($collect_keyboards);
                         $collect_keyboards = [];

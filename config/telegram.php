@@ -49,7 +49,6 @@ use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\StoreProductAddCommand
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleAddCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleSetCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListCommand;
-use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListWithoutItemsCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveActionCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\ProductItem\Add\Price\StoreProductItemPriceAddCommand;
@@ -278,7 +277,6 @@ return [
         StoreProductItemQuantityAddCommand::class,
         StoreProductItemQuantitySetCommand::class,
 
-        StoreProductListWithoutItemsCommand::class,
         StoreProductListCommand::class,
         StoreProductRemoveCommand::class,
         StoreProductRemoveActionCommand::class,
