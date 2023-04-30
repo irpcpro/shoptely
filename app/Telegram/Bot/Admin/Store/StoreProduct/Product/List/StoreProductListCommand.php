@@ -69,9 +69,11 @@ class StoreProductListCommand extends CommandStepByStep
 
                 $collect_data[] = [
                     'keyboard' => Keyboard::make()->inline()->row([
+                        Keyboard::inlineButton(['text' => emoji('memo ') . 'ویرایش آیتم ها', 'callback_data' => 'c_store_product_edit '. $product->id_product]),
+                        Keyboard::inlineButton(['text' => emoji('pencil2 ') . 'ویرایش نام', 'callback_data' => 'c_store_product_edit_name '. $product->id_product]),
+                    ])->row([
                         Keyboard::inlineButton(['text' => emoji('x ') . 'حذف', 'callback_data' => 'c_store_product_remove '. $product->id_product]),
-                        Keyboard::inlineButton(['text' => emoji('pencil2 ') . 'ویرایش نام', 'callback_data' => 'c_store_product_edit '. $product->id_product]),
-                        Keyboard::inlineButton(['text' => emoji('memo ') . 'ویرایش آیتم ها', 'callback_data' => 'c_store_product_edit '. $product->id_product])
+                        Keyboard::inlineButton(['text' => emoji('pencil2 ') . 'ویرایش دسته بندی', 'callback_data' => 'c_store_product_edit '. $product->id_product]),
                     ]),
                     'text' => join_text([
                         emoji('pushpin ') . '<b>' . $i++ . ' - نام: </b>' . $product->title,

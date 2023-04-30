@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove;
+namespace App\Telegram\Bot\Admin\Store\StoreProduct\Product\EditName;
 
 use App\Telegram\CommandStepByStep;
 use Illuminate\Support\Facades\Log;
 
-class StoreProductRemoveCommand extends CommandStepByStep
+class StoreProductEditNameCommand extends CommandStepByStep
 {
 
-    protected string $name = 'store_product_remove';
+    protected string $name = 'store_product_edit_name';
 
     public $user;
 
@@ -32,19 +32,14 @@ class StoreProductRemoveCommand extends CommandStepByStep
                 ]);
                 // return response to user
                 $this->replyWithMessage([
-                    'text' => join_text([
-                        emoji('pushpin ') . 'آیا مطمئن به حذف این محصول هستید؟:',
-                        'کلمه <b>'.STORE_PRODUCT_REMOVE_KEYWORD.'</b> را ارسال کنید',
-                        '',
-                        emoji('warning ') . '(آیتم محصولات متصل شده به این محصول، حذف خواهند شد)'
-                    ]),
+                    'text' => emoji('pencil2 ') . 'عنوان محصول رو وارد کن:',
                     'parse_mode' => 'HTML'
                 ]);
             }else{
                 $this->replyWithMessage([
-                    'text' => 'محصولی با این شناسه یافت نشد',
+                    'text' => 'دسته بندی با این شناسه یافت نشد',
                 ]);
-                Log::error('ERROR:: user tries to get id_product which is not for himself 1',[
+                Log::error('ERROR:: user tries to get id_product which is not for himself edit name',[
                     'chat_id' => $this->update->getMessage()->chat->id,
                     'id_category' => $id_product
                 ]);
@@ -53,7 +48,7 @@ class StoreProductRemoveCommand extends CommandStepByStep
             $this->replyWithMessage([
                 'text' => 'خطایی رخ داده است. لطفا بعدا تلاش کنید.',
             ]);
-            Log::error("ERROR:: error in get category id", [
+            Log::error("ERROR:: error in get category id 11", [
                 'chat_id' => $this->update->getMessage()->chat->id,
                 'id_category' => $id_product,
                 'exception' => $exception,
@@ -69,7 +64,7 @@ class StoreProductRemoveCommand extends CommandStepByStep
     function nextSteps(): array
     {
         return [
-            StoreProductRemoveActionCommand::class
+            StoreProductEditNameActionCommand::class
         ];
     }
 }

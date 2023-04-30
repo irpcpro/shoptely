@@ -38,14 +38,14 @@ class StoreProductRemoveActionCommand extends CommandStepByStep
                 $product->delete();
 
                 $this->replyWithMessage([
-                    'text' => emoji('white_check_mark ') . 'دسته حذف شد',
+                    'text' => emoji('white_check_mark ') . 'محصول حذف شد',
                 ]);
 
                 $this->removeCache();
                 Telegram::triggerCommand('store_product_management', $this->update);
             }else{
                 $this->replyWithMessage([
-                    'text' => 'دسته بندی با این شناسه یافت نشد',
+                    'text' => 'محصولی با این شناسه یافت نشد',
                 ]);
                 Log::error('ERROR:: user tries to get id_product which is not for himself 2',[
                     'chat_id' => $this->update->getMessage()->chat->id,

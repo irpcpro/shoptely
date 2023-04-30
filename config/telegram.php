@@ -48,6 +48,8 @@ use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Image\StoreProductImag
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\StoreProductAddCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleAddCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Add\Title\StoreProductTitleSetCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\EditName\StoreProductEditNameActionCommand;
+use App\Telegram\Bot\Admin\Store\StoreProduct\Product\EditName\StoreProductEditNameCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\List\StoreProductListCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveActionCommand;
 use App\Telegram\Bot\Admin\Store\StoreProduct\Product\Remove\StoreProductRemoveCommand;
@@ -280,6 +282,8 @@ return [
         StoreProductListCommand::class,
         StoreProductRemoveCommand::class,
         StoreProductRemoveActionCommand::class,
+        StoreProductEditNameCommand::class,
+        StoreProductEditNameActionCommand::class,
 
     ],
 
